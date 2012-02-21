@@ -1,0 +1,500 @@
+   48  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/qualifying/026-r01-026-team025-team113-branches-greatlakes-greatwall.rms > /tmp/fun1
+   49  ant jar
+   50  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/qualifying/026-r01-026-team025-team113-branches-greatlakes-greatwall.rms > /tmp/fun1
+   51  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/qualifying/026-r01-026-team025-team113-branches-greatlakes-greatwall.rms > /tmp/fun1
+   52  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/qualifying/026-r01-026-team025-team113-branches-greatlakes-greatwall.rms > /tmp/fun1
+   53  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/fm/013-r09-013-team016-team086-jungle-temple-interchange.rms > /tmp/fun2
+   54  ant jar
+   55  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/fm/013-r09-013-team016-team086-jungle-temple-interchange.rms > /tmp/fun2
+   56  ant jar
+   57  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/fm/013-r09-013-team016-team086-jungle-temple-interchange.rms > /tmp/fun2
+   58  git status
+   59  git commit -m "closer to javascript output"
+   60  git commit -m "closer to javascript output" src/main/battlecode/analysis/TwoSigmaAnalyzer.java
+   61  git push
+   62  ant jar
+   63  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/fm/013-r09-013-team016-team086-jungle-temple-interchange.rms > /tmp/fun3
+   64  git status
+   65  git diff src/main/battlecode/analysis/TwoSigmaAnalyzer.java
+   66  git commit -m "every third frame" src/main/battlecode/analysis/TwoSigmaAnalyzer.java
+   67  git push
+   68  git pull
+   69  git push
+   70  pwd
+   71  ls
+   72  pushd ~/Dropbox/Programming/battlecode2012/djfork/battlegram/
+   73  pwd
+   74  ls
+   75  ls *.twosigma.*
+   76  for file in `ls *.twosigma.*`; do echo $file; done
+   77  chmod a+x postproc.sh 
+   78  postproc.sh 
+   79  ./postproc.sh 
+   80  ./postproc.sh 
+   81  ./postproc.sh 
+   82  ./postproc.sh 
+   83  ./postproc.sh 
+   84  ./postproc.sh 
+   85  rm *.js.js
+   86  ./postproc.sh 
+   87  rm *.js.js.html
+   88  rm *.js.html
+   89  pwd
+   90  ls
+   91  cd ..
+   92  ls
+   93  pwd
+   94  cd ~/Dropbox/Public/
+   95  ls
+   96  tar cvf - battlegram/ | gzip > battlegram.tar.gz
+   97  cd ~/Dropbox/Public/
+   98  cd battlegram
+   99  ./postproc.sh
+  100  pwd
+  101  ls
+  102  cd ..
+  103  ls
+  104  rm battlegram.tar.gz
+  105  pwd
+  106  ls
+  107  tar cvf - battlegram2 | gzip > battlegram2.tar.gz
+  108  pwd
+  109  ls
+  110  cp -r battlegram2 battlegram3
+  111  pwd
+  112  tar cvf - battlegram3 | gzip > battlegram3.tar.gz
+  113  exit
+  114  pwd
+  115  ls
+  116  cd battlecode-server/
+  117  ls
+  118  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer
+  119  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms
+  120  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  121  pwd
+  122  find . -name MatchHeader.java
+  123  pwd
+  124  ant
+  125  ant
+  126  ant
+  127  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | head
+  128  ant
+  129  ant
+  130  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | head
+  131  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  132  ant jar
+  133  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  134  ant jar
+  135  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  136  find -print0 . -name '*.java | xargs -0 grep -i domination
+  137  find -print0 . -name '*.java' | xargs -0 grep -i domination
+  138  find -print0 . -name '*.java' | xargs -0 -L1 grep -i domination
+  139  find . -print0 -name '*.java' | xargs -0 grep -i domination
+  140  ant jar
+  141  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  142  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/seeding/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  143  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/sprint/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  144  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/sprint/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort
+  145  for rms in /Users/david/Games/battlecode2012/spring/*.rms; do echo $rms; java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/sprint/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -k2,3 > $rms.summary; done
+  146  for rms in `ls /Users/david/Games/battlecode2012/spring/*.rms`; do echo $rms; done
+  147  for rms in `ls /Users/david/Games/battlecode2012/sprint/*.rms`; do echo $rms; done
+  148  for rms in `ls /Users/david/Games/battlecode2012/sprint/*.rms`; do echo ${rms}; java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/sprint/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -k2,3 > ${rms}.summary; done
+  149  rm /Users/david/Games/battlecode2012/sprint/*.summary
+  150  for rms in `ls /Users/david/Games/battlecode2012/sprint/*.rms`; do echo ${rms} ${rms}.summary; java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/sprint/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -k2,3 > ${rms}.summary; done
+  151  for rms in `ls /Users/david/Games/battlecode2012/sprint/*.rms`; do echo ${rms}; rm -f ${rms}.summary; java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer ${rms} | sort | uniq -c | sort -k2,3 > ${rms}.summary; done
+  152  for rms in `ls /Users/david/Games/battlecode2012/sprint/*.rms`; do echo ${rms}; rm -f ${rms}.summary; java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer ${rms} | sort | uniq -c | sort -k2,3 > ${rms}.summary; done
+  153  pwd
+  154  cd ..
+  155  pwd
+  156  ls
+  157  mkdir djfork
+  158  cd djfork/
+  159  git clone https://dsjoerg@github.com/dsjoerg/battlecode-server.git
+  160  pwd
+  161  cd battlecode-server/
+  162  mkdir -p ~/.ant/lib
+  163  ant download-ivy
+  164  ant retrieve
+  165  ant jar
+  166  cp battlecode-server.jar battlecode_distro
+  167  cd ..
+  168  git clone https://github.com/battlecode/battlecode-client.git
+  169  ls -l
+  170  cd battlecode-server/
+  171  ls
+  172  ls -l
+  173  rm battlecode_distro 
+  174  pwd
+  175  cp ../../battlecode-server/src/main/battlecode/analysis/TwoSigmaAnalyzer.java src/main/battlecode/analysis
+  176  ant jar
+  177  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  178  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/sprint/matches/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  179  java -cp battlecode-server.jar battlecode.analysis.TwoSigmaAnalyzer /Users/david/Games/battlecode2012/sprint/002-r01-002-team103-team104-hive-puddles-chess.rms | sort | uniq -c | sort -nr
+  180  pwd
+  181  git status
+  182  git add src/main/battlecode/analysis/TwoSigmaAnalyzer.java
+  183  git commit -m "first"
+  184  git push
+  185  git help
+  186  git push
+  187  git push
+  188  git push
+  189  exit
+  190  cd Dropbox/Programming/
+  191  ls
+  192  cd battlecode2012/
+  193  ls
+  194  emacs -nw
+  195  fg
+  196  cd /Applications/Battlecode2012.2/
+  197  ls
+  198  ant build.xml
+  199  ant
+  200  ant
+  201  ant
+  202  ant
+  203  ant
+  204  ant
+  205  ant
+  206  ant
+  207  ant
+  208  ant
+  209  ant
+  210  ant
+  211  cd /Users/david/Dropbox/Programming/battlecode2012/djfork/battlegram
+  212  scp -r leelin@renthop.com:battlecode/battlecode-server/matches/*twosigma* .
+  213  ls
+  214  cd Games/battlecode2012/
+  215  ls
+  216  domain ggtracker.com
+  217  host ggtracker.com
+  218  /Applications/Sc2gears/Sc2gears-os-x.command ; exit;
+  219  printenv PATH
+  220  source ~/.bash_profile
+  221  printenv PATH
+  222  which pg_config
+  223  pwd
+  224  source venv/bin/activate
+  225  printenv PATH
+  226  pip install Django psycopg2
+  227  django-admin.py startproject hellodjango
+  228  python hellodjango/manage.py runserver
+  229  pip freeze > requirements.txt
+  230  cat requirements.txt
+  231  git init
+  232  git add .
+  233  git commit -m "my django app"
+  234  heroku create --stack cedar
+  235  git push heroku master
+  236  heroku ps
+  237  heroku logs
+  238  heroku open
+  239  heroku run python hellodjango/manage.py syncdb
+  240  heroku run python hellodjango/manage.py shell
+  241  pwd
+  242  pwd
+  243  deactivate
+  244  pwd
+  245  cd ..
+  246  mkdir ggtracker_django
+  247  cd ggtracker_django
+  248  virtualenv venv --distribute
+  249  source venv/bin/activate
+  250  pwd
+  251  pip install Django psycopg2
+  252  pwd
+  253  ls
+  254  django-admin.py startproject ggtracker
+  255  python ggtracker/manage.py runserver
+  256  pip freeze > requirements.txt
+  257  cat requirements.txt
+  258  git init
+  259  git add .
+  260  git commit -m "my django app"
+  261  heroku create --stack cedar
+  262  git push heroku master
+  263  heroku ps
+  264  heroku logs
+  265  heroku open
+  266  pwd
+  267  ls
+  268  python
+  269  python manage.py syncdb
+  270  pwd
+  271  ls
+  272  cd ggtracker/
+  273  ls
+  274  python manage.py syncdb
+  275  psql
+  276  psql -U postgres
+  277  python manage.py syncdb
+  278  python manage.py syncdb
+  279  pwd
+  280  ls
+  281  python manage.py startapp ggtracker
+  282  python manage.py startapp replays
+  283  python manage.py sql replays
+  284  python manage.py sql validate
+  285  python manage.py validate
+  286  python manage.py syncdb
+  287  python manage.py syncdb
+  288  python manage.py runserver
+  289  python manage.py runserver
+  290  pwd
+  291  ls
+  292  cd ..
+  293  ls
+  294  git status
+  295  git status
+  296  git add
+  297  git add .
+  298  git status
+  299  git commit -m "added a replays app and a Game model"
+  300  git push heroku master
+  301  heroku run python hellodjango/manage.py syncdb
+  302  heroku run python ggtracker/manage.py syncdb
+  303  heroku open
+  304  pwd
+  305  ls
+  306  cd ggtracker/
+  307  ls
+  308  cd replays/
+  309  ls
+  310  mkdir templates
+  311  cd templates
+  312  mkdir replays
+  313  cd replays/
+  314  pwd
+  315  cd ../../../..
+  316  pwd
+  317  pwd
+  318  ls
+  319  cd ggtracker/
+  320  python manage.py runserver
+  321  python manage.py runserver
+  322  python manage.py runserver
+  323  python manage.py runserver
+  324  python manage.py runserver
+  325  python manage.py runserver
+  326  python manage.py runserver
+  327  python manage.py runserver
+  328  python manage.py runserver
+  329  python manage.py runserver
+  330  python manage.py runserver
+  331  pwd
+  332  ls
+  333  python manage.py syncdb
+  334  server
+  335  python manage.py runserver
+  336  python manage.py runserver
+  337  python manage.py syncdb
+  338  python manage.py runserver
+  339  python manage.py runserver
+  340  python manage.py syncdb
+  341  psql
+  342  psql -U postgres
+  343  psql -U postgres
+  344  python manage.py syncdb
+  345  pwd
+  346  pip install South
+  347  python manage.py syncdb
+  348  psql -U postgres
+  349  ./manage.py schemamigration ggtracker --initial
+  350  pwd
+  351  python ./manage.py schemamigration ggtracker --initial
+  352  pwd
+  353  ls
+  354  python ./manage.py schemamigration replays --initial
+  355  ./manage.py migrate replays
+  356  python ./manage.py migrate replays
+  357  python ./manage.py convert_to_south replays
+  358  python ./manage.py migrate
+  359  python ./manage.py 
+  360  python ./manage.py convert_to_south replays
+  361  python ./manage.py migrate
+  362  python ./manage.py 
+  363  python ./manage.py help reset
+  364  python ./manage.py help sqlreset
+  365  python ./manage.py sqlreset replays
+  366  python ./manage.py reset replays
+  367  python ./manage.py convert_to_south replays
+  368  python ./manage.py migrate replays
+  369  python ./manage.py 
+  370  python ./manage.py help flush
+  371  python ./manage.py help sqlflush
+  372  python ./manage.py help cleanup
+  373  python ./manage.py sqlflush
+  374  psql -U postgres
+  375  psql -U postgres
+  376  python ./manage.py migrate replays
+  377  python manage.py runserver
+  378  python ./manage.py schemamigration replays
+  379  python ./manage.py schemamigration replays --auto
+  380  python ./manage.py migrate replays
+  381  python manage.py runserver
+  382  python manage.py runserver
+  383  which psql
+  384  psql postgres://gosnmuajyo:rrNFsnmEn_AzPS7bAaRf@ec2-50-17-236-208.compute-1.amazonaws.com/gosnmuajyo
+  385  heroku
+  386  heroku db
+  387  heroku help db
+  388  heroku db:pull
+  389  sudo gem install taps
+  390  heroku db:pull
+  391  heroku run python hellodjango/manage.py syncdb
+  392  pwd
+  393  heroku run python ggtracker/manage.py syncdb
+  394  heroku run python ggtracker/manage.py migrate replays
+  395  python ggtracker/manage.py
+  396  cd ..
+  397  python ggtracker/manage.py
+  398  python ggtracker/manage.py help flush
+  399  python ggtracker/manage.py help sqlflush
+  400  python ggtracker/manage.py help dbshell
+  401  git status
+  402  git commit -m "fun"
+  403  git commit -m "fun" .
+  404  git push heroku master
+  405  heroku run python ggtracker/manage.py migrate replays
+  406  heroku open
+  407  pwd
+  408  python manage.py runserver
+  409  cd ggtracker/
+  410  python manage.py runserver
+  411  python manage.py runserver
+  412  python manage.py runserver
+  413  python ./manage.py schemamigration replays --auto
+  414  python ./manage.py migrate replays
+  415  python manage.py runserver
+  416  pwd
+  417  python manage.py runserver
+  418  python ./manage.py schemamigration replays --auto
+  419  python ./manage.py migrate replays
+  420  python manage.py runserver
+  421  python manage.py runserver
+  422  python manage.py runserver
+  423  python manage.py runserver
+  424  python ./manage.py schemamigration replays --auto
+  425  python ./manage.py migrate replays
+  426  python ./manage.py migrate replays
+  427  python ./manage.py schemamigration replays --auto
+  428  python ./manage.py schemamigration replays --help
+  429  python ./manage.py migrate replays
+  430  python ./manage.py migrate replays
+  431  python ./manage.py migrate replays
+  432  python ./manage.py migrate replays
+  433  python ./manage.py migrate replays
+  434  python ./manage.py migrate replays
+  435  python ./manage.py migrate replays
+  436  python manage.py runserver
+  437  python manage.py runserver
+  438  python ./manage.py schemamigration replays --auto
+  439  python ./manage.py migrate replays
+  440  python manage.py runserver
+  441  python manage.py runserver
+  442  python manage.py runserver
+  443  python ./manage.py
+  444  python ./manage.py migrate
+  445  python ./manage.py migrate --help
+  446  python ./manage.py schemamigration replays --auto
+  447  python ./manage.py migrate replays
+  448  python manage.py runserver
+  449  python manage.py runserver  C-c C-c
+  450  python manage.py runserver  C-c C-c
+  451  python manage.py runserver
+  452  python manage.py runserver
+  453  python manage.py runserver
+  454  python manage.py runserver
+  455  python manage.py runserver
+  456  python manage.py
+  457  pwd
+  458  pip install django-dowser
+  459  /usr/local/bin/pypy-1.7/bin/pypy
+  460  pwd
+  461  python manage.py runserver
+  462  python manage.py runserver
+  463  python manage.py runserver
+  464  python manage.py runserver
+  465  easy_install django-dowser
+  466  easy_install django_dowser
+  467  printenv PATH
+  468  pip install virtualenvwrapper
+  469  add2virtualenv
+  470  printenv $PYTHONPATH
+  471  printenv PYTHONPATH
+  472  echo $PYTHONPATH
+  473  echo $PYTHONPATH
+  474  exit
+  475  pwd
+  476  cd ..
+  477  ls
+  478  cd ..
+  479  venv/bin/activate
+  480  bash venv/bin/activate
+  481  exit
+  482  source venv/bin/activate
+  483  print $PYTHONPATH
+  484  echo $PYTHONPATH
+  485  echo $PATH
+  486  python
+  487  env
+  488  which python
+  489  grep PYTHONPATH venv/bin/*
+  490  export PYTHONPATH=fuckit
+  491  echo $PYTHONPATH
+  492  python
+  493  grep fuckit venv/bin/*
+  494  find venv -print0 | xargs -0 grep fuckit
+  495  echo $PYTHONPATH
+  496  exit
+  497  pwd
+  498  source venv/bin/activate
+  499  echo $PYTHONPATH
+  500  exit
+  501  pwd
+  502  cd ../django-dowser/
+  503  git status
+  504  git commit -m "aping what another django package did" .
+  505  git push 
+  506  git commit -m "more aping" .
+  507  git add MANIFEST.in
+  508  git commit -m "more aping" .
+  509  git push
+  510  python
+  511  pwd
+  512  cd ../ggtracker_django/
+  513  git status
+  514  rm -rf ggtracker/vendor/django-dowser
+  515  git add .
+  516  git status
+  517  git commit -m "fixed memory leak in macro.py - dont use globals yo" .
+  518  git push heroku master
+  519  heroku logs
+  520  git status 
+  521  git commit -m "comment out dowser, its only on dev for now" .
+  522  git push heroku master
+  523  python ./manage.py schemamigration replays --auto
+  524  pwd
+  525  cd ggtracker/
+  526  python ./manage.py schemamigration replays --auto
+  527  python ./manage.py schemamigration replays --auto
+  528  python ./manage.py migrate replays
+  529  pwd
+  530  git status
+  531  git add .
+  532  git commit -m "player portraits, first version" .
+  533  git push heroku master
+  534  git status
+  535  pwd
+  536  python ./manage.py schemamigration replays --auto
+  537  python ./manage.py migrate replays
+  538  pwd
+  539  python ./manage.py schemamigration replays --auto
+  540  python ./manage.py schemamigration replays --auto
+  541  python ./manage.py schemamigration replays --auto
+  542  rm replays/migrations/0019_auto__add_stat.py 
+  543  rm replays/migrations/0018_auto__del_stat__del_playeringamestring__del_playeringamestat__add_sc2r.py
+  544  python ./manage.py schemamigration replays --auto
+  545  python ./manage.py migrate replays
+  546  pwd
+  547  history > ../some_commands.txt

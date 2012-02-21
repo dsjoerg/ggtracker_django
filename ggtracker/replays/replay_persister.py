@@ -1,0 +1,181 @@
+import Image
+import hashlib
+import boto
+import vendor.sc2reader
+import StringIO
+
+from models import *
+
+from datetime import datetime
+from django.conf import settings
+from vendor.sc2reader.processors.macro import Macro
+from boto.s3.key import Key
+
+class ReplayPersister():
+
+      def __init__(self):
+            self.replaybucket = boto.connect_s3(settings.AWS_ACCESS_KEY_ID,
+                                                settings.AWS_SECRET_ACCESS_KEY)\
+                                                .lookup(settings.REPLAYS_BUCKET_NAME)
+
+      def get_file_from_s3(self, s3key):
+            k = Key(self.replaybucket)
+            k.key = s3key
+            stringio = StringIO.StringIO()
+            k.get_contents_to_file(stringio)
+            return stringio
+
+      def upload_from_ruby(self, id):
+            replayDB = Replay.objects.get(id__exact=id)
+            replaystringio = self.get_file_from_s3("%s.SC2Replay" % replayDB.md5hash)
+
+            # delete any Game data associated with this replay
+            gameDBs = Game.objects.filter(replay__id__exact=id)
+            assert gameDBs.count() <= 1
+            if gameDBs.count() == 1:
+                  gameDB = gameDBs[0]
+                  gameDB.delete()
+
+            # make a new game record
+            gameDB = Game(replay=replayDB)
+
+            # parse the replay into memory
+            replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro])
+
+            # write it out to the DB
+            populateGameFromReplay(replay, gameDB)
+
+            #release this memory
+            replaystringio.close()
+            
+            return True
+
+      def upload_complete(self, filename, stringio):
+            m = hashlib.md5()
+            m.update(stringio.getvalue())
+            hash = m.hexdigest()
+            gameDBs = Game.objects.filter(md5hash__exact=hash)
+            assert gameDBs.count() <= 1
+            if gameDBs.count() == 1:
+                  gameDB = gameDBs[0]
+                  gameDB.delete()
+
+            gameDB = Game(md5hash=hash, filename=filename)
+            
+            replay = vendor.sc2reader.read_file(stringio, processors=[Macro])
+            populateGameFromReplay(replay, gameDB)
+
+
+def winning_team(replay):
+    winning_team = 0
+    for team in replay.teams:
+#        print "team", dir(team)
+        if hasattr(team, "result"):
+            if team.result == "Win":
+                winning_team = team.number
+    return winning_team
+
+def createPlayer(player):
+      playerDB = Player(name=player.name)
+      playerDB.gateway = player.gateway
+      playerDB.region = player.region
+      playerDB.subregion = player.subregion
+      playerDB.bnet_id = player.uid
+      playerDB.save()
+      return playerDB
+
+def didPlayerWin(player):
+      if player.team.result == "Win":
+            return True
+      elif player.team.result == "Loss":
+            return False
+      else:
+            return None
+
+def getWPMArr(player, replay):
+      theArr = [0] * (replay.length.seconds/60 + 1)
+      for minute,workers in player.wpm_arr.items():
+            theArr[minute] = workers
+      return theArr
+
+def getOrCreatePlayer(player):
+      playerDBs = Player.objects.filter(bnet_id__exact=player.uid,
+                                        gateway__exact=player.gateway,
+                                        subregion__exact=player.subregion)
+      assert playerDBs.count() <= 1
+      if playerDBs.count() == 1:
+            playerDB = playerDBs[0]
+      else:
+            playerDB = createPlayer(player)
+
+      return playerDB
+
+MAPHEIGHT = 100
+
+def getOrCreateMap(replay):
+      mapDBs = Map.objects.filter(s2ma_hash__exact=replay.map.hash)
+
+      assert mapDBs.count() <= 1
+      if mapDBs.count() == 1:
+            mapDB = mapDBs[0]
+      else:
+            mapDB = Map(name=replay.map.name, s2ma_hash=replay.map.hash, gateway=replay.map.gateway)
+            mapDB.save()
+
+            # retrieve s2ma from battlenet, extract image
+            replay.map.load()
+            mapsio = StringIO.StringIO(replay.map.minimap)
+            im = Image.open(mapsio)
+            cropped = im.crop(im.getbbox())
+            cropsize = cropped.size
+
+            # resize height to MAPHEIGHT, and compute new width that
+            # would preserve aspect ratio
+            newwidth = int(cropsize[0] * (float(MAPHEIGHT) / cropsize[1]))
+            finalsize = (newwidth, MAPHEIGHT)
+            resized = cropped.resize(finalsize, Image.ANTIALIAS)
+
+            # write cropped resized minimap image to a string as a png
+            finalIO = StringIO.StringIO()
+            resized.save(finalIO, "png")
+
+            # store that in S3
+            bucket = boto.connect_s3(settings.AWS_ACCESS_KEY_ID,
+                                     settings.AWS_SECRET_ACCESS_KEY)\
+                                     .lookup(settings.MINIMAP_BUCKET_NAME)
+            k = Key(bucket)
+            k.key = "%s_%i.png" % (replay.map.hash, MAPHEIGHT)
+            k.set_contents_from_string(finalIO.getvalue())
+
+            # clean up
+            finalIO.close()
+
+      return mapDB
+
+def populateGameFromReplay(replay, gameDB):
+      mapDB = getOrCreateMap(replay)
+      gameDB.map = mapDB
+      gameDB.release_string = replay.release_string
+      gameDB.game_time = datetime.utcfromtimestamp(replay.unix_timestamp)
+      gameDB.winning_team = winning_team(replay)
+      gameDB.game_type = replay.type
+      gameDB.category = replay.category
+      gameDB.duration_seconds = replay.length.seconds
+      gameDB.save()
+
+      for player in replay.players:
+            playerDB = getOrCreatePlayer(player)
+
+            pigDB = PlayerInGame(game=gameDB, player=playerDB)
+            pigDB.team = player.team.number
+            pigDB.chosen_race = player.pick_race[0]
+            pigDB.race = player.play_race[0]
+            pigDB.win = didPlayerWin(player)
+            if hasattr(player, "avg_apm"):
+                  pigDB.apm = player.avg_apm
+            if hasattr(player, "wpm"):
+                  pigDB.wpm = player.wpm
+            if hasattr(player, "wpm_arr"):
+                  pigDB.wpm_by_minute = getWPMArr(player, replay)
+
+            pigDB.save()

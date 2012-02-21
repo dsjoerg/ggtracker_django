@@ -1,0 +1,106 @@
+|1 Base Colossus vs TPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Robotics Facility|Stalker|Warpgate Research|Gateway|Pylon|Fleet Beacon|Observer
+|1 Gate Core   Pylon|Gateway|Nexus|Assimilator|Pylon|Cybernetics Core|Zealot
+|1 Gate CorePylon|Gateway|Assimilator|Pylon|Cybernetics Core|
+|1 Gate FE (vs. Terran)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Pylon|Stalker|Nexus|Gateway|Robotics Facility|Pylon|
+|1 Gate FE into 3 Gate RoboPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Pylon|Stalker|Stalker|Nexus|Assimilator|Robotics Facility|Gateway|Gateway|
+|1 Gate FE vs Terran - Greedy variationPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Nexus|Stalker|Gateway|Gateway|Pylon
+|1 Gate FE vs TerranPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Stalker|Pylon|Stalker|Nexus|Gateway|Robotics Facility|Pylon
+|1 Gate Robo ObserverPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Robotics Facility|Warpgate Research|Stalker|Pylon|Observer|Pylon|Nexus|Gateway|Gateway
+|1 Gate RoboPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Robotics Facility|Stalker|Pylon|Immortal|Observer|Pylon
+|1 Gate Stargate vs ZergPylon|Gateway|Assimilator|Pylon|Zealot|Cybernetics Core|Assimilator|Zealot|Pylon|Sentry|Stargate|Void Ray|Void Ray
+|1 Gate in Base, 2 Gate Proxy (Vs. Protoss)   Pylon|Gateway|Pylon|Gateway|Gateway|Zealot|Pylon|Zealot|Zealot|Zealot
+|1 Gate in base, 2 gate proxy vs ProtossPylon|Gateway|Pylon|Assimilator|Zealot|Gateway|Gateway|Zealot|Zealot|Zealot|Zealot|
+|1 gate FE into 3 gate roboPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Pylon|Stalker|Warpgate Research|Stalker|Nexus|Assimilator|Robotics Facility|Gateway|Gateway
+|1 gate Stargate (vs zerg)Pylon|Gateway|Assimilator|Pylon|Zealot|Cybernetics Core|Assimilator|Zealot|Pylon|Warpgate Research|Sentry|Stargate
+|1-Gate Expand (vs. Terran)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Nexus|Warpgate Research|Stalker|Gateway|Gateway|Pylon|Assimilator
+|10 Gate Tech   Pylon|Gateway|Assimilator|Colossus|Assimilator|Pylon|Warpgate Research
+|10 Pylon 10 Gateway Fast Stalker   Pylon|Gateway|Assimilator|Cybernetics Core|Pylon|Stalker
+|10 Pylon 10 Gateway Zealot Pressure   Pylon|Gateway|Pylon|Zealot|Pylon|Zealot|Zealot
+|2 Gate FE v ZPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Pylon|Sentry|Assimilator|Gateway|Sentry|Pylon|Nexus|Forge|Sentry|Sentry|Photon Cannon|Photon Cannon|
+|2 Gate Robo   Pylon|Gateway|Assimilator|Cybernetics Core|Pylon|Assimilator|Warpgate Research|Robotics Facility|Zealot|Sentry|Pylon|Gateway|Immortal
+|2 Gate Robo PvPPylon|Gateway|Assimilator|Cybernetics Core|Pylon|Stalker|Assimilator|Robotics Facility|Zealot|Sentry|Pylon|Gateway|Immortal
+|2 Gate Rush (vs. Zerg)   Pylon|Gateway|Gateway|Pylon|Zealot|Zealot|Zealot|Pylon|Zealot|Zealot|Zealot|
+|2 Gate Rush vs ZergPylon|Gateway|Gateway|Pylon|Zealot|Zealot|Zealot|Pylon|Zealot|Zealot
+|2 Gate Zealot Rush v ProtossPylon|Gateway|Gateway|Zealot|Zealot|Zealot|Pylon
+|2 gate pressure into expansionPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Gateway|Gateway|Warpgate Research|Sentry|Phoenix|Stalker|Stalker|Phoenix|Nexus|Stalker|Stalker|
+|3 Gate Robo   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Pylon|Stalker|Warpgate Research|Assimilator|Gateway|Sentry|Pylon|Gateway|Robotics Facility
+|3 Gate Robo Into Double ForgePylon|Gateway|Assimilator|Pylon|Cybernetics Core|Stalker|Assimilator|Robotics Facility|Gateway|Gateway|Observer|Nexus|Forge|Forge|
+|3 Gate Robo Timing Attack (vs. Zerg)   Pylon|Gateway|Assimilator|Pylon|Zealot|Cybernetics Core|Zealot|Sentry|Warpgate Research|Zealot|Pylon|Assimilator|Robotics Facility|Gateway|Observer|Pylon|Immortal|Gateway
+|3 Gate Robo Timing Attack vs ZergPylon|Gateway|Assimilator|Pylon|Zealot|Cybernetics Core|Zealot|Sentry|Warpgate Research|Zealot|Pylon|Assimilator|Robotics Facility|Gateway|Observer|Pylon|Immortal|Gateway
+|3 Gate Robo into Double Forge   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Warpgate Research|Stalker|Assimilator|Robotics Facility|Gateway|Gateway|Observer|Nexus|Forge|Forge
+|3 Gate RoboPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Pylon|Stalker|Assimilator|Gateway|Sentry|Pylon|Gateway|Robotics Facility|
+|3 Gate Sentry into 5 Gate Zealot all-in   Pylon|Gateway|Assimilator|Pylon|Assimilator|Cybernetics Core|Zealot|Pylon|Warpgate Research|Sentry|Gateway|Gateway|Gateway|Gateway|Sentry|Pylon|Pylon|
+|3 Gate Sentry into 5 gate Zealot all inPylon|Gateway|Assimilator|Pylon|Assimilator|Cybernetics Core|Zealot|Pylon|Warpgate Research|Sentry|Gateway|Gateway|Gateway|Gateway|Sentry|Pylon|Pylon|
+|3 Gate sentry expandPylon|Cybernetics Core|Assimilator|Zealot|Sentry|Warpgate Research|Pylon|Gateway|Gateway|Pylon|Nexus|
+|3 gate DTPylon|Gateway|Assimilator|Pylon|Zealot|Cybernetics Core|Assimilator|Warpgate Research|Stalker|Pylon|Twilight Council|Gateway|Gateway|Stalker|Dark Shrine|Pylon|Stalker|Stalker|Pylon|Dark Templar|
+|3 gate sentry expandPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Zealot|Warpgate Research|Sentry|Pylon|Gateway|Gateway|Pylon|Nexus|
+|3 gate void ray all-inPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Zealot|Warpgate Research|Stalker|Pylon|Stargate|Sentry|Gateway|Gateway|Void Ray|Pylon|Void Ray|Zealot|Stalker|Stalker|
+|3 stalker robo vs PPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Gateway|Stalker|Warpgate Research|Stalker|Assimilator|Stalker|Pylon|Robotics Facility|Gateway|
+|3 stalker roboPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Gateway|Stalker|Warpgate Research|Assimilator|Stalker|Stalker|Pylon|Robotics Facility|Gateway|Sentry
+|3-Gate Dark Templar (PvT)   Pylon|Gateway|Assimilator|Pylon|Zealot|Cybernetics Core|Assimilator|Warpgate Research|Sentry|Pylon|Twilight Council|Gateway|Gateway|Stalker|Dark Shrine|Pylon|Stalker|Pylon|Dark Templar|Dark Templar|
+|4 Gate Push (vs. Zerg)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Stalker|Gateway|Gateway|Gateway|Stalker|Pylon|Pylon
+|4 GatePylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Gateway|Gateway|Gateway|Stalker|Pylon|Pylon|
+|4 Warpgate RushPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Stalker|Warpgate Research|Gateway|Gateway|Gateway|Stalker|Pylon
+|4 gatePylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Stalker|Gateway|Gateway|Gateway|Stalker|Pylon
+|5 Stalker, 8 zalot rushPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Gateway|Warpgate Research|Gateway|Zealot|Pylon|Zealot|Pylon|Stalker|Assimilator|Stalker|Zealot|Stalker|Pylon|Stalker|
+|5 Zealot 8 Stalker Rush (Vs. Protoss)Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Gateway|Warpgate Research|Gateway|Zealot|Pylon|Zealot|Pylon|Stalker|Assimilator|Stalker|Zealot|Stalker|Pylon|Stalker|
+|Adel's Late Gas PvPPylon|Gateway|Pylon|Gateway|Zealot|Assimilator|Pylon|Zealot|Cybernetics Core|Zealot|Zealot|Pylon|Stalker|Stalker|Warpgate Research
+|Bischu Anti 4gate - Tal'Darim AltarPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Robotics Facility|Gateway|Warpgate Research|Zealot|Immortal|Zealot
+|Bischu Anti-4Gate (vs. Protoss)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Robotics Facility|Gateway|Warpgate Research|Zealot|Immortal|Zealot|Pylon
+|Bischu Anti-4Gate (vs. Protoss)Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Robotics Facility|Gateway|Gateway|Warpgate Research|Immortal|Zealot
+|Blink Stalker Push vs ZPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Pylon|Stalker|Stalker|Warpgate Research|Gateway|Gateway|Pylon|Twilight Council|Gateway|Blink|Stalker|Pylon
+|Blink Stalker PushPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Pylon|Warpgate Research|Stalker|Stalker|Gateway|Gateway|Pylon|Twilight Council|Gateway|Blink|Stalker|Stalker|Stalker|Pylon|
+|Cannon RushPylon|Forge|Pylon|Photon Cannon
+|DT Expand vs ZPylon|Gateway|Assimilator|Pylon|Assimilator|Cybernetics Core|Zealot|Pylon|Sentry|Warpgate Research|Sentry|Twilight Council|Gateway|Gateway|Dark Shrine|Pylon|Pylon|Sentry|Nexus
+|DT rush vs zergPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Twilight Council|Pylon|Gateway|Dark Shrine|Gateway|Warpgate Research
+|Dark Templar expandPylon|Gateway|Assimilator|Pylon|Assimilator|Cybernetics Core|Zealot|Pylon|Warpgate Research|Sentry|Sentry|Twilight Council|Gateway|Gateway|Dark Shrine|Pylon|Sentry|Nexus|Dark Templar|Dark Templar|
+|Defensive 3 gate (PvP)Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Gateway|Assimilator|Pylon|Sentry|Gateway|Stalker|Stalker|Pylon
+|Defensive 3 gate vs PPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Gateway|Assimilator|Pylon|Sentry|Gateway|Stalker|Stalker|Pylon
+|Fast Expansion Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Pylon|Stalker|Nexus|Gateway|Gateway|Robotics Facility|
+|Forge FE - Nexus firstPylon|Nexus|Forge|Gateway|Photon Cannon|Pylon
+|Forge FEPylon|Forge|Nexus|Photon Cannon|Gateway|Zealot
+|Forge Fast Expansion (Nexus First)   Pylon|Nexus|Forge|Gateway|Photon Cannon|Pylon
+|Forge Fast Expansion (vs. Zerg)   Pylon|Forge|Nexus|Photon Cannon|Gateway|Pylon|Zealot
+|Gate Nexus PvZPylon|Gateway|Pylon|Zealot|Nexus|Forge|Pylon
+|Gate Nexus YufFE Build APylon|Warpgate Research|Pylon|Zealot|Nexus|Forge|Pylon|Assimilator|Zealot|Photon Cannon|Cybernetics Core|
+|Gate Nexus YufFE Build B (core first)Pylon|Warpgate Research|Pylon|Nexus|Zealot|Pylon|Assimilator|Zealot|Cybernetics Core|Zealot|Forge|Stalker|Warpgate Research
+|Gate then Forge PvZ ExpandPylon|Gateway|Assimilator|Forge|Zealot|Zealot|Zealot|Cybernetics Core|Zealot|Warpgate Research|Robotics Facility|Zealot|Pylon|Assimilator|Gateway|Photon Cannon|Immortal|Nexus
+|Gateway Forge Expand (vs. Zerg)   Pylon|Gateway|Assimilator|Forge|Pylon|Zealot|Zealot|Cybernetics Core|Pylon|Zealot|Warpgate Research|Robotics Facility|Zealot|Pylon|Assimilator|Gateway|Pylon|Photon Cannon|Immortal|Nexus|
+|Geiko 3gate PvPPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Gateway|Assimilator|Pylon|Sentry|Gateway|Stalker|Stalker|Pylon
+|Huk's 20 1 gate 1 FEPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Warpgate Research|Nexus|Gateway|Gateway|Stalker|Pylon|Stalker|Stalker|Stalker|
+|Huks 1 gate FE vs TerranPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Warpgate Research|Nexus|Stalker|Gateway|Gateway|Stalker|Pylon
+|Immortal Rush (vs Zerg)Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Robotics Facility|Zealot|Immortal
+|Immortal Rush (vs. Zerg)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Robotics Facility|Zealot|Immortal
+|Immortal Rush vs ZergPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Robotics Facility|Zealot|Immortal
+|Korean 4 gatePylon|Gateway|Assimilator|Cybernetics Core|Pylon|Warpgate Research|Gateway|Gateway|Gateway
+|Korean 4gate v PPylon|Gateway|Assimilator|Cybernetics Core|Pylon|Warpgate Research|Gateway|Gateway|Gateway|Pylon
+|MC's 2 gate expand vs ZPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Stalker|Gateway|Pylon|Sentry|Pylon|Nexus
+|MC's 2-Gate Expand (vs. Zerg)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Stalker|Gateway|Pylon|Warpgate Research|Sentry|Sentry|Pylon|Sentry|Sentry|Pylon|Nexus|
+|Mothership Rush All In   Pylon|Pylon|Assimilator|Pylon|Gateway|Cybernetics Core|Stargate|Pylon|Gateway|Fleet Beacon|Mothership|
+|Mothership rush all inPylon|Pylon|Assimilator|Pylon|Assimilator|Gateway|Cybernetics Core|Stargate|Pylon|Gateway|Fleet Beacon|Mothership
+|Naniwa blink/observer - Gates before twilightPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Assimilator|Stalker|Warpgate Research|Pylon|Stalker|Gateway|Gateway|Sentry|Twilight Council|Pylon|Robotics Facility|
+|Naniwa blink/observer - Twilight Before GatesPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Assimilator|Stalker|Warpgate Research|Pylon|Stalker|Twilight Council|Sentry|Gateway|Gateway|Pylon|Robotics Facility|
+|Naniwa's Blink Observer Build (vs. Protoss)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Assimilator|Stalker|Warpgate Research|Pylon|Stalker|Gateway|Gateway|Sentry|Twilight Council|Pylon|Robotics Facility|
+|Nexus FirstPylon|Nexus|Gateway|Pylon|Assimilator|Zealot|Cybernetics Core|Assimilator|Stalker|Robotics Facility|Gateway|Gateway|Gateway
+|Nexus FirstPylon|Nexus|Gateway|Pylon|Assimilator|Zealot|Cybernetics Core|Assimilator|Warpgate Research|Stalker|Gateway|Gateway|Gateway
+|Nexus FirstPylon|Nexus|Gateway|Pylon|Assimilator|Zealot|Cybernetics Core|Assimilator|Warpgate Research|Stalker|Robotics Facility|Gateway|Gateway|Gateway|
+|Nexus first vs TPylon|Nexus|Gateway|Pylon|Assimilator|Zealot|Cybernetics Core|Stalker|Warpgate Research|Robotics Facility|Gateway|Gateway|Gateway
+|Noumena's Dual Warp Prism Harass (vs. Zerg)Pylon|Forge|Nexus|Pylon|Assimilator|Photon Cannon|Gateway|Gateway|Zealot|Cybernetics Core|Zealot|Zealot|Zealot|Warpgate Research|Robotics Facility|Assimilator|Gateway|Gateway|Twilight Council
+|Noumena's Dual Warp Prism HarassPylon|Forge|Nexus|Pylon|Assimilator|Photon Cannon|Gateway|Gateway|Zealot|Cybernetics Core|Zealot|Zealot|Zealot|Warpgate Research|Robotics Facility|Assimilator|Gateway|Gateway|Twilight Council
+|One Base Colossus (vs. Terran)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Robotics Facility|Stalker|Warpgate Research|Pylon|Robotics Facility|Observer
+|Phoenix PlayPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Pylon|Stalker|Stalker|Stargate|Sentry|Pylon|Gateway|Phoenix|Robotics Facility
+|Photon Cannon rush   Pylon|Forge|Pylon|Photon Cannon|Photon Cannon|
+|ProtossIcon.png10/10 2 Gate (vs. Protoss)Pylon|Gateway|Gateway|Zealot|Zealot|Pylon
+|ProtossIcon.pngNony's Phoenix BuildPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Zealot|Warpgate Research|Sentry|Pylon|Zealot|Stalker|Pylon|Gateway|Phoenix|Phoenix
+|Proxy Stargate into 3 Gate All InPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Zealot|Warpgate Research|Pylon|Stargate|Sentry|Gateway|Gateway|Void Ray|Pylon|Void Ray
+|PvZ 2 Gate FE 10-16   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Pylon|Sentry|Assimilator|Gateway|Sentry|Pylon|Nexus|Forge|Sentry|Sentry|Photon Cannon|Photon Cannon|
+|Roger Gate NexusVoid Ray|Phoenix|Colossus|Gateway|Pylon|Stargate|Dark Templar|Phoenix|Void Ray|Nexus|Carrier|Colossus|Void Ray|Warp Prism|Sentry|Carrier|Phoenix|Immortal|Sentry|Void Ray|
+|Safe 3 Gate Opening into robo (Vs. Protoss)   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Warpgate Research|Stalker|Gateway|Assimilator|Pylon|Sentry|Gateway|Stalker|Stalker|Pylon|Robotics Facility|Stalker|Stalker|Stalker|
+|Stalker Void Ray Build (vs. Terran)   Pylon|Gateway|Assimilator|Gateway|Cybernetics Core|Pylon|Stalker|Stalker|Pylon|Assimilator|Stalker|Stalker|Stargate|Void Ray|
+|Stalker/Void Ray v TerranPylon|Gateway|Assimilator|Gateway|Cybernetics Core|Pylon|Stalker|Stalker|Assimilator|Stargate|Void Ray|
+|Stargate After Cybernetics Core   Pylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Stalker|Stargate|Pylon|Warpgate Research|Stalker|Void Ray|Void Ray|Pylon|Gateway|Gateway
+|Stargate vs T or PPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Assimilator|Stalker|Stargate|Void Ray|Pylon|Warpgate Research|Gateway|Gateway
+|Tinman 11 Gate into 3gate pressurePylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Stalker|Warpgate Research|Assimilator|Gateway|Gateway|Pylon|Pylon|Pylon|
+|Tinman 11 gate into 3 gate pressurePylon|Gateway|Assimilator|Pylon|Cybernetics Core|Zealot|Stalker|Warpgate Research|Assimilator|Gateway|Gateway|Pylon|Pylon|Pylon|
+|Tyler PvPPylon|Gateway|Assimilator|Cybernetics Core|Pylon|Stalker|Warpgate Research|Assimilator|Robotics Facility|Zealot|Pylon|Sentry|Immortal|Gateway|Pylon|Immortal
+|Yong's Double Forge v TerranPylon|Gateway|Assimilator|Pylon|Cybernetics Core|Stalker|Warpgate Research|Nexus|Pylon|Sentry|Assimilator|Gateway|Gateway|Sentry|Robotics Facility|Assimilator|Sentry|Zealot|Assimilator|Forge|

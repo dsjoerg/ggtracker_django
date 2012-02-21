@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" ></script>
+        <script src="{{ STATIC_URL }}ajaxuploader/js/fileuploader.js" ></script>
+        <link href="{{ STATIC_URL }}ajaxuploader/css/fileuploader.css" media="screen" rel="stylesheet" type="text/css" />
+        <style>
+.qq-upload-button {
+    display:block; /* or inline-block */
+    width: 75px;
+    padding: 0px 0;
+    text-align:center;    
+    background:#000000; border-bottom:0px solid #ddd;
+    color:#fff;
+}
+        </style>
+        <script>
+            $(function(){
+            var uploader = new qq.FileUploader({
+                action: "{% url my_ajax_upload %}",
+                element: $('#file-uploader')[0],
+                multiple: true,
+                template: '<div class="qq-uploader">' + 
+                '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
+                '<div class="qq-upload-button">'+
+                '<img src="{{ STATIC_URL }}uploadbutton.gif"/>' +
+                '</div>' +
+                '<ul class="qq-upload-list"></ul>' + 
+             '</div>',
+                onComplete: function(id, fileName, responseJSON) {
+                },
+                onAllComplete: function(uploads) {
+                },
+                params: {
+                    'csrf_token': '{{ csrf_token }}',
+                    'csrf_name': 'csrfmiddlewaretoken',
+                    'csrf_xname': 'X-CSRFToken',
+                },
+
+            });
+            });
+        </script>
+</head>
+<body>
+
+<div id="file-uploader">
+  <noscript>
+    <p>Please enable JavaScript to use file uploader.</p>
+  </noscript>
+  Upload a file
+</div>
+</body>
+</html>
