@@ -47,7 +47,7 @@ class Sc2RanksCache(models.Model):
     sc2ranks_retrieved = models.DateTimeField(null=True)
 
     def __unicode__(self):
-        return '(%d) %s' % (self.id, self.player.name)
+        return '(%d) %s %s' % (self.id, self.player.name, self.sc2ranks_retrieved)
 
 class PlayerInGame(models.Model):
     game = models.ForeignKey('Game')
