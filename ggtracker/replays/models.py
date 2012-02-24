@@ -49,6 +49,19 @@ class Sc2RanksCache(models.Model):
     def __unicode__(self):
         return '(%d) %s %s' % (self.id, self.player.name, self.sc2ranks_retrieved)
 
+class PlayerLeague(models.Model):
+    player = models.ForeignKey('Player')
+    num_players = models.IntegerField()
+    is_random = models.BooleanField()
+    league = models.IntegerField()
+    rank = models.IntegerField()
+    is_best = models.BooleanField()
+    fav_race = models.CharField(max_length=1)
+
+    def __unicode__(self):
+        return '(%d) %s %iv%i league %i' % (self.id, self.player.name, self.num_players, self.num_players, self.league)
+    
+
 class PlayerInGame(models.Model):
     game = models.ForeignKey('Game')
     player = models.ForeignKey('Player')
