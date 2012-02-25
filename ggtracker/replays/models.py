@@ -34,7 +34,7 @@ class Player(models.Model):
     subregion = models.IntegerField()
     bnet_id = models.IntegerField()
     character_code = models.IntegerField(null=True)
-    sc2ranks_info = models.CharField(max_length=5000, null=True)
+    sc2ranks_info = models.CharField(max_length=50000, null=True)
     sc2ranks_retrieved = models.DateTimeField(null=True)
 
     def __unicode__(self):
@@ -43,7 +43,7 @@ class Player(models.Model):
 class Sc2RanksCache(models.Model):
     player = models.ForeignKey('Player')
     bnet_url = models.CharField(max_length=255, null=True)
-    sc2ranks_info = models.CharField(max_length=10000, null=True)
+    sc2ranks_info = models.CharField(max_length=50000, null=True)
     sc2ranks_retrieved = models.DateTimeField(null=True)
 
     def __unicode__(self):
