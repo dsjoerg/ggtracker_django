@@ -77,6 +77,13 @@ class PlayerInGame(models.Model):
     def __unicode__(self):
         return '(%d) %s / %s' % (self.id, self.game.filename, self.player.name)
 
+class PlayerInGameMinute(models.Model):
+    player_in_game = models.ForeignKey('PlayerInGame')
+    minute = models.IntegerField()
+    wpm = models.IntegerField()
+    apm = models.IntegerField()
+
+
 class Stat(models.Model):
     pass
 
