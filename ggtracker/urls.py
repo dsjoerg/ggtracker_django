@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 #    url(r'start$', 'replays.views.start', name="start"),
     url(r'ajax-upload$', 'replays.views.dj_uploader', name="my_ajax_upload"),
     url(r'^upload.json$', 'replays.views.json_uploader', name="whatever"),
+    url(r'^buildnodes$', 'replays.views.buildnodes', name="buildnodes"),
 )
 
 urlpatterns += patterns('',

@@ -7,8 +7,11 @@ from ajaxuploader.views import AjaxFileUploader
 from upload import StringUploadBackend
 from replay_persister import *
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
+from buildnodes import *
+
 
 replayPersister = ReplayPersister()
+buildNodes = BuildNodes()
 uploader = AjaxFileUploader(backend=StringUploadBackend, completeListener=replayPersister)
 
 def json_uploader(request):
@@ -34,3 +37,15 @@ def start(request):
 
 def upload(request):
     return render(request, 'replays/upload.html')
+
+def buildnodes_v1(request):
+    file = buildNodes.stream_file(request.GET.get("id"))
+    response = HttpResponse(mimetype="application/octet-stream")
+    response['Content-Disposition'] = 'attachment; filename=%s' % "foo.SC2Replay"
+    response.write(file.getvalue())
+    return response
+
+def buildnodes(request):
+    buildNodes.populate_bo_for_game(request.GET.get("id"))
+    response = HttpResponse("Done.<br>")
+    return response

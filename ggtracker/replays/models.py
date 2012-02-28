@@ -6,6 +6,9 @@ class Replay(models.Model):
     def __unicode__(self):
         return '(%d) %s' % (self.id, self.md5hash)
 
+    def s3key(self):
+        return '%s.SC2Replay' % self.md5hash
+
 class Map(models.Model):
     name = models.CharField(max_length=255)
     s2ma_hash = models.CharField(max_length=255, null=True)
@@ -75,13 +78,31 @@ class PlayerInGame(models.Model):
     wpm_by_minute = models.CharField(max_length=1000, null=True)
 
     def __unicode__(self):
-        return '(%d) %s / %s' % (self.id, self.game.filename, self.player.name)
+        return '(%d) %s / %s' % (self.id, self.game.map.name, self.player.name)
 
 class PlayerInGameMinute(models.Model):
     player_in_game = models.ForeignKey('PlayerInGame')
     minute = models.IntegerField()
     wpm = models.IntegerField()
     apm = models.IntegerField()
+
+
+class BuildNode(models.Model):
+    parent = models.ForeignKey('BuildNode', null=True, blank=True)
+    action = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return '(%d) %s' % (self.id, self.action)
+
+
+class PlayerInGameBuild(models.Model):
+    player_in_game = models.ForeignKey('PlayerInGame')
+    buildnode = models.ForeignKey('BuildNode')
+    when_seconds = models.IntegerField()
+
+    def __unicode__(self):
+        return '(%d)' % (self.id)
+
 
 
 class Stat(models.Model):
