@@ -1,3 +1,5 @@
+import traceback
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.middleware.csrf import get_token
 from django.shortcuts import render_to_response
@@ -46,6 +48,12 @@ def buildnodes_v1(request):
     return response
 
 def buildnodes(request):
-    buildNodes.populate_bo_for_game(request.GET.get("id"))
-    response = HttpResponse("Done.<br>")
+    try:
+        buildNodes.populate_bo_for_game(request.GET.get("id"))
+        response = HttpResponse("Done.<br>")
+    except Exception, e:
+        print "Exception!"
+        traceback.print_exc()
+        response = HttpResponseServerError("problem var")
+
     return response
