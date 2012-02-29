@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from datetime import datetime
 import string
+import re
 
 from collections import defaultdict
 
@@ -19,6 +20,14 @@ def IsTrainEvent(theAbility):
 'Reaper',
 'Ghost',
 'Marauder',
+'Siege Tank',
+'Thor',
+'Hellion',
+'Medivac',
+'Banshee',
+'Raven',
+'Battlecruiser',
+'Viking',
 'Warp Prism',
 'Observer',
 'Colossus',
@@ -27,6 +36,8 @@ def IsTrainEvent(theAbility):
 'Carrier',
 'Void Ray',
 'Zergling',
+'Overlord',
+'Queen',
 'Hydralisk',
 'Mutalisk',
 'Ultralisk',
@@ -38,7 +49,7 @@ def IsTrainEvent(theAbility):
         return True
 
 def IsBuildEvent(theAbility):
-    if theAbility in ["Gateway", "Forge", "Cybernetics Core", "Robotics Facility", "Pylon", "Nexus", "Fleet Beacon", "Twilight Council", "Photon Cannon", "Assimilator", "Stargate", "Dark Shrine", "Robotics Bay"]:
+    if theAbility in ["Gateway", "Forge", "Cybernetics Core", "Robotics Facility", "Pylon", "Nexus", "Fleet Beacon", "Twilight Council", "Photon Cannon", "Assimilator", "Stargate", "Dark Shrine", "Robotics Bay", "Templar Archives"]:
         return True
     if theAbility in ['Command Center', 'Supply Depot', 'Barracks', 'Engineering Bay', 'Missile Turret', 'Bunker', 'Refinery', 'Sensor Tower', 'Ghost Academy', 'Factory', 'Starport', 'Armory', 'Fusion Core']:
         return True
@@ -60,9 +71,19 @@ def IsBuildEvent(theAbility):
         return True
     return False
 
+def IsImportantResearchEvent(theAbility):
+    if theAbility in ["Blink", "Warp Gate", "Psionic Storm", "Extended Thermal Lance"]:
+        return True
+    if theAbility in ['Stimpack', "Combat Shields", "Siege Tech", "Infernal Pre-igniter", "Cloaking Field"]:
+        return True
+    if theAbility in ['Evolve Burrow', 'Evolve Metabolic Boost', 'Evolve Adrenal Glands', 'Evolve Neural Parasite']:
+        return True
+    return False
+
 WORKER_PRODUCE_SECONDS = 17
 WORKER_SPAM_MARGIN_SECONDS = 3
 WORKER_PRODUCE_SPACING_SECONDS = WORKER_SPAM_MARGIN_SECONDS
+UNIT_PRODUCE_SPACING_SECONDS = 3
 # its a tough call, but lets recognize every worker-creation command
 # every three seconds. if we make it any shorter, then real spam is
 # going to pollute the stats. but if we make it any longer, then
@@ -79,10 +100,29 @@ def worker_built_no_spam(player, when_seconds, lwb):
         return True
     return False
 
+def unit_built_no_spam(player, unit, when_seconds, lub):
+    if unit != "Overlord":
+        return True
+
+    if player in lub:
+        if unit in lub[player]:
+            if (when_seconds - lub[player][unit]) > UNIT_PRODUCE_SPACING_SECONDS:
+                lub[player][unit] = when_seconds
+                return True
+        else:
+            lub[player][unit] = when_seconds
+            return True
+    else:
+        lub[player] = {}
+        lub[player][unit] = when_seconds
+        return True
+    return False
+
 def Macro(replay):
 
     # start with a clean slate
     lwb = {}
+    lub = {}
 
     try:
         data = config.build_data[replay.build]
@@ -97,6 +137,8 @@ def Macro(replay):
     for event in replay.events:
         if event.is_local and event.is_player_action and isinstance(event, AbilityEvent) and data.ability_known(event.ability):
             ability_name = data.ability(event.ability)
+            clean_ability = re.sub("^Warp In ", "", ability_name)
+            clean_ability = re.sub("^Train ", "", clean_ability)
             player = event.player
             if not player.is_observer:
                 if ability_name in ["Probe", "Drone", "Train SCV"]:
@@ -105,13 +147,16 @@ def Macro(replay):
                         setattr(player, "wpm", curwpm + 1)
                         minute = event.second/60
                         player.wpm_arr[minute] += 1
-                elif IsBuildEvent(ability_name) or IsTrainEvent(ability_name):
-                    curbo = getattr(player, "bo", "")
-                    setattr(player, "bo", curbo + data.ability(event.ability) + "|")
-                if IsTrainEvent(ability_name):
-                    curtrained = getattr(player, "trained", {})
-                    curtrained[ability_name] = curtrained.setdefault(ability_name, 0) + 1
-                    setattr(player, "trained", curtrained)
+                elif IsBuildEvent(ability_name) or IsTrainEvent(ability_name) or IsImportantResearchEvent(ability_name):
+                    if unit_built_no_spam(player, clean_ability, event.second, lub):
+                        curbo = getattr(player, "bo", "")
+                        setattr(player, "bo", curbo + clean_ability + "|")
+
+#                if IsTrainEvent(ability_name):
+#                    if unit_built_no_spam(player, clean_ability, event.second, lub):
+#                        curtrained = getattr(player, "trained", {})
+#                        curtrained[clean_ability] = curtrained.setdefault(clean_ability, 0) + 1
+#                        setattr(player, "trained", curtrained)
                 
                     
 

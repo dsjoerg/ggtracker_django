@@ -34,6 +34,9 @@ class BuildNodes():
 
       def populate_build(self, game, player):
             pig = PlayerInGame.objects.get(player__name__exact=player.name, game__exact=game)
+            if not hasattr(player, "bo"):
+                  return
+
             builtitems = player.bo.lower().split("|")
 
             current_node, created = BuildNode.objects.get_or_create(parent=None, action=pig.race.lower())
