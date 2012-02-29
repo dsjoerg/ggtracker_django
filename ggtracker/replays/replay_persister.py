@@ -3,6 +3,8 @@ import hashlib
 import boto
 import vendor.sc2reader
 import StringIO
+from buildnodes import *
+
 
 from models import *
 
@@ -17,6 +19,7 @@ class ReplayPersister():
             self.replaybucket = boto.connect_s3(settings.AWS_ACCESS_KEY_ID,
                                                 settings.AWS_SECRET_ACCESS_KEY)\
                                                 .lookup(settings.REPLAYS_BUCKET_NAME)
+            self.buildnodes = BuildNodes()
 
       def get_file_from_s3(self, s3key):
             k = Key(self.replaybucket)
@@ -25,6 +28,8 @@ class ReplayPersister():
             k.get_contents_to_file(stringio)
             return stringio
 
+      # this function gets called when uploading through the
+      # ruby-served page
       def upload_from_ruby(self, id):
             replayDB = Replay.objects.get(id__exact=id)
             replaystringio = self.get_file_from_s3("%s.SC2Replay" % replayDB.md5hash)
@@ -45,11 +50,17 @@ class ReplayPersister():
             # write it out to the DB
             populateGameFromReplay(replay, gameDB)
 
+            for player in replay.players:
+                  print "populating for %s" % player.name
+                  self.buildnodes.populate_build(gameDB, player)
+
             #release this memory
             replaystringio.close()
             
             return True
 
+      # this function gets called when uploading through the
+      # django-served page
       def upload_complete(self, filename, stringio):
             m = hashlib.md5()
             m.update(stringio.getvalue())
@@ -64,6 +75,9 @@ class ReplayPersister():
             
             replay = vendor.sc2reader.read_file(stringio, processors=[Macro])
             populateGameFromReplay(replay, gameDB)
+            for player in replay.players:
+                  self.buildnodes.populate_build(gameDB, player)
+
 
 
 def winning_team(replay):
