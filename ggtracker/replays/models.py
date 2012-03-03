@@ -2,6 +2,7 @@ from django.db import models
 
 class Replay(models.Model):
     md5hash = models.CharField(max_length=32, db_index=True)
+    dropsc_id = models.IntegerField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):
         return '(%d) %s' % (self.id, self.md5hash)
