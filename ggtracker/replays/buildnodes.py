@@ -33,7 +33,7 @@ class BuildNodes():
             PlayerInGameBuild.objects.filter(player_in_game__game__exact=game).delete()
 
       def populate_build(self, game, player):
-            pig = PlayerInGame.objects.get(player__name__exact=player.name, game__exact=game)
+            pig = PlayerInGame.objects.get(player__bnet_id__exact=player.uid, game__exact=game)
             if not hasattr(player, "bo"):
                   return
 
