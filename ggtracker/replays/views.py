@@ -20,10 +20,14 @@ def json_uploader(request):
     if request.method != "GET":
         return HttpResponseBadRequest("AJAX request not valid")
     id = request.GET['id']
-    if replayPersister.upload_from_ruby(id):
-        return HttpResponse("no problem")
-    else:
-        return HttpResponseServerError("problem")
+    try:
+      if replayPersister.upload_from_ruby(id):
+          return HttpResponse("no problem")
+      else:
+          return HttpResponseServerError("problem")
+    except Exception, e:
+      print "Exception! ", e
+      return HttpResponseServerError("big problem. check the logs.")
 
 def dj_uploader(request):
     try:
