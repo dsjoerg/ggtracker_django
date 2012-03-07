@@ -27,6 +27,7 @@ class Game(models.Model):
     game_type = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
     duration_seconds = models.IntegerField(null=True)
+    average_league = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
         return '(%d) %s' % (self.id, self.map.name)
@@ -104,6 +105,14 @@ class PlayerInGameBuild(models.Model):
     def __unicode__(self):
         return '(%d)' % (self.id)
 
+
+class IdentifiedBuild(models.Model):
+    buildnode = models.ForeignKey('BuildNode', null=True, blank=True)
+    name = models.CharField(max_length=300)
+    url = models.CharField(max_length=500)
+
+    def __unicode__(self):
+        return '(%s)' % (self.name)
 
 
 class Stat(models.Model):
