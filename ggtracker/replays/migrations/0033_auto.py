@@ -26,6 +26,9 @@ class Migration(SchemaMigration):
         # Adding index on 'PlayerInGame', fields ['race']
         db.create_index('replays_playeringame', ['race'])
 
+        # Adding index on 'BuildNode', fields ['action']
+        db.create_index('replays_buildnode', ['action'])
+
         # Adding index on 'BuildNode', fields ['depth']
         db.create_index('replays_buildnode', ['depth'])
 
@@ -124,6 +127,9 @@ class Migration(SchemaMigration):
 
         # Removing index on 'BuildNode', fields ['depth']
         db.delete_index('replays_buildnode', ['depth'])
+
+        # Removing index on 'BuildNode', fields ['action']
+        db.delete_index('replays_buildnode', ['action'])
 
         # Removing index on 'PlayerInGame', fields ['race']
         db.delete_index('replays_playeringame', ['race'])
