@@ -98,7 +98,7 @@ class PlayerInGameMinute(models.Model):
 
 class BuildNode(models.Model):
     parent = models.ForeignKey('BuildNode', null=True, blank=True)
-    action = models.CharField(max_length=50, db_index=True)
+    action = models.CharField(max_length=50)
     depth = models.IntegerField(null=True, blank=True, db_index=True)
 
     def __unicode__(self):
