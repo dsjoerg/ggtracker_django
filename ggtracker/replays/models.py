@@ -21,6 +21,7 @@ class Map(models.Model):
 class Game(models.Model):
     replay = models.ForeignKey('Replay')
     game_time = models.DateTimeField(null=True, db_index=True)
+    upload_time = models.DateTimeField(null=True, db_index=True)
     release_string = models.CharField(max_length=255, db_index=True)
     winning_team = models.IntegerField(null=True)
     map = models.ForeignKey('Map')
