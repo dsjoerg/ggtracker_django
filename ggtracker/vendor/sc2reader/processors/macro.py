@@ -132,13 +132,20 @@ def Macro(replay):
 
     for player in replay.players:
         player.wpm_arr = defaultdict(int)
+        player.apm_arr = defaultdict(int)
 
     # Gather data for WPM measurements
     for event in replay.events:
+        if event.is_local and event.is_player_action and not player.is_observer:
+            player = event.player
+            minute = event.second/60
+            player.apm_arr[minute] += 1
+            
         if event.is_local and event.is_player_action and isinstance(event, AbilityEvent) and data.ability_known(event.ability):
             ability_name = data.ability(event.ability)
-            clean_ability = re.sub("^Warp In ", "", ability_name)
+            clean_ability = re.sub("^Warp in ", "", ability_name)
             clean_ability = re.sub("^Train ", "", clean_ability)
+#            print "ability_name = %s, clean_ability = %s" % (ability_name, clean_ability)
             player = event.player
             if not player.is_observer:
                 if ability_name in ["Probe", "Drone", "Train SCV"]:
@@ -152,12 +159,14 @@ def Macro(replay):
                         curbo = getattr(player, "bo", "")
                         setattr(player, "bo", curbo + clean_ability + "|")
 
-#                if IsTrainEvent(ability_name):
-#                    if unit_built_no_spam(player, clean_ability, event.second, lub):
-#                        curtrained = getattr(player, "trained", {})
-#                        curtrained[clean_ability] = curtrained.setdefault(clean_ability, 0) + 1
-#                        setattr(player, "trained", curtrained)
-                
+                if IsTrainEvent(ability_name):
+                        trained_unmatched = getattr(player, "trained_unmatched", {})
+                        smooshed_ability = clean_ability.lower().translate(None, ' ')
+                        trained_unmatched_list = trained_unmatched.setdefault(smooshed_ability, [])
+                        # keep the list in reverse order, i.e first item on the list is the last train event.
+                        trained_unmatched_list.insert(0, event)
+                        trained_unmatched[smooshed_ability] = trained_unmatched_list
+                        setattr(player, "trained_unmatched", trained_unmatched)
                     
 
 

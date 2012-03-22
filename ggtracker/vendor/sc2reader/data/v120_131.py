@@ -382,7 +382,7 @@ class Data_120_131(BaseData):
         pass
 
     @Channels('Graviton Beam', 0x010c20, 0x010c01)
-    class Pheonix(Moveable, Attacker):
+    class Phoenix(Moveable, Attacker):
         pass
 
     class Carrier(Moveable, Attacker):

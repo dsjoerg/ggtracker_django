@@ -376,7 +376,7 @@ class Data_Template(BaseData):
         pass
 
     @Channels('Graviton Beam', 0x0, 0x0)
-    class Pheonix(Moveable, Attacker):
+    class Phoenix(Moveable, Attacker):
         pass
 
     class Carrier(Moveable, Attacker):

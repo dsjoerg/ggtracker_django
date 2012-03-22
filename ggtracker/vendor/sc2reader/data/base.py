@@ -286,7 +286,7 @@ class BaseData(object):
     class SentryHallucinated(Protoss, Moveable, Attacker):
         code = 0x6902
 
-    class Pheonix(Protoss, Moveable, Attacker):
+    class Phoenix(Protoss, Moveable, Attacker):
         code = 0x6a01
 
     class PhoenixHallucinated(Protoss, Moveable, Attacker):

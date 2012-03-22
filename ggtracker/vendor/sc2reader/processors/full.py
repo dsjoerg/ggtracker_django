@@ -188,7 +188,11 @@ def Full(replay):
             event.player.events.append(event)
 
         # Because applying the events is slow, make it configurable
-        if replay.opt.apply: event.apply(data)
+        try:
+            if replay.opt.apply: event.apply(data)
+        except Exception, e:
+            print "Ouch, exception while applying", e
+            traceback.print_exc()
 
         l = replay.events_by_type[event.name]
         l.append(event)

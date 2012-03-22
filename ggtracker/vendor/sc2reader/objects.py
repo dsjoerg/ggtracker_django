@@ -355,6 +355,7 @@ class AbilityEvent(Event):
         self.ability = ability
 
     def apply(self, data):
+        return
         self.data = data
         
         if self.ability:
@@ -402,6 +403,7 @@ class TargetAbilityEvent(AbilityEvent):
         self.target = target
 
     def apply(self, data):
+        return
         self.data = data
         obj_id, obj_type = self.target
 
@@ -465,6 +467,7 @@ class HotkeyEvent(Event):
         super(HotkeyEvent, self).__init__(framestamp, player, type, code)
         self.hotkey = hotkey
         self.overlay = overlay
+#        print "HE: %s player %d type %d code %d hotkey %s overlay %s %s" % (frame_to_time(framestamp), player, type, code, hotkey, overlay, self.__class__.__name__)
 
     def __str__(self):
         return self._str_prefix() + "Hotkey #%d" % self.hotkey
@@ -516,7 +519,18 @@ class GetHotkeyEvent(HotkeyEvent):
         hotkeyed = hotkey.current[:]
 
         if self.overlay:
-            hotkeyed = self.overlay(hotkeyed)
+            new_hotkeyed = self.overlay(hotkeyed)
+            removed = [item for item in hotkeyed if not item in new_hotkeyed]
+            for obj in removed:
+                obj.first_hotkeyed_out = self.frame
+            hotkeyed = new_hotkeyed
+
+        for obj in hotkeyed:
+            if not hasattr(obj, "first_selected"):
+                obj.first_selected = self.frame
+                obj.player = self.player
+#            print "GHE: %s %s" % (frame_to_time(self.frame), hex(obj.id))
+            obj.last_selected = self.frame
 
         selection = self.player.get_selection()
         selection[self.frame] = hotkeyed
@@ -529,14 +543,24 @@ class GetHotkeyEvent(HotkeyEvent):
     def __str__(self):
         return HotkeyEvent.__str__(self) + " - Get; Selection: %s" % ', '.join(str(o) for o in self.selected)
 
+def frame_to_time(frame):
+	minutes = frame / (60*16);
+	seconds = (frame/16) % 60;
+	return "%02d:%02d" % (minutes, seconds)
+
 class SelectionEvent(Event):
     name = 'SelectionEvent'
 
-    def __init__(self, framestamp, player, type, code, bank, objects, deselect):
+    def __init__(self, framestamp, player, type, code, bank, objects, deselect, first=None):
         super(SelectionEvent, self).__init__(framestamp, player, type, code)
         self.bank = bank
         self.objects = objects
         self.deselect = deselect
+        self.first = first
+#        print "SE: %s player %d type %d code %d bank %d first %s" % (frame_to_time(framestamp), player, type, code, bank, hex(first)),
+#        for (obj_id, obj_type) in objects:
+#            print "(%s %s)" % (hex(obj_id), hex(obj_type)),
+#        print ""
 
     def apply(self, data):
         self.data = data
@@ -547,10 +571,17 @@ class SelectionEvent(Event):
             obj.visit(self.frame, self.player)
 
         if self.deselect:
-            selected = self.deselect(selected)
+            new_selected = self.deselect(selected)
+            removed = [item for item in selected if not item in new_selected]
+            for item in removed:
+                item.last_removed = self.frame
+#                if (hex(item.id) == "0x4040001"):
+#                    print "removed: ", self.frame;
+            selected = new_selected
 
         # Add new selection
         for (obj_id, obj_type) in self.objects:
+#            print "Yo yo yo"
             try:
                 type_class = self.data.type(obj_type)
                 if (obj_id, obj_type) not in self.player.replay.objects:
@@ -558,8 +589,16 @@ class SelectionEvent(Event):
                     self.player.replay.objects[(obj_id,obj_type)] = obj
                 else:
                     obj = self.player.replay.objects[(obj_id,obj_type)]
+#                if (hex(obj_id) == "0x4040001"):
+#                    print "added ", self.frame;
+                if not hasattr(obj, "first_selected"):
+                    obj.first_selected = self.frame
+                    obj.player = self.player
+                obj.last_selected = self.frame
                 obj.visit(self.frame, self.player, type_class)
                 selected.append(obj)
+#                print "Hi! obj = %s" % obj
+                self.player.replay.objects[(obj_id,obj_type)] = obj
             except KeyError:
                 print self._str_prefix() + "Selection ERROR: " + hex(obj_type)
                 #raise

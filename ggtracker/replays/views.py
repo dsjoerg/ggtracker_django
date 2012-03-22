@@ -27,6 +27,7 @@ def json_uploader(request):
           return HttpResponseServerError("problem")
     except Exception, e:
       print "Exception! ", e
+      traceback.print_exc()
       return HttpResponseServerError("big problem. check the logs.")
 
 def dj_uploader(request):

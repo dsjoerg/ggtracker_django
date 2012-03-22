@@ -86,6 +86,9 @@ class PlayerInGame(models.Model):
     wpm = models.FloatField(null=True)
     apm_by_minute = models.CharField(max_length=1000, null=True)
     wpm_by_minute = models.CharField(max_length=1000, null=True)
+    color = models.CharField(max_length=6, null=True, blank=True)
+    pid = models.IntegerField(null=True, blank=True)
+    armies_by_frame = models.CharField(max_length=1000000, blank=True, null=True)
 
     def __unicode__(self):
         return '(%d) %s / %s' % (self.id, self.game.map.name, self.player.name)

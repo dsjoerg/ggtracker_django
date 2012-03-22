@@ -7,6 +7,7 @@ from buildnodes import *
 
 
 from models import *
+from snapshotter import *
 
 from datetime import datetime
 from django.conf import settings
@@ -45,7 +46,7 @@ class ReplayPersister():
             gameDB = Game(replay=replayDB)
 
             # parse the replay into memory
-            replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro])
+            replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro], apply=True)
 
             # write it out to the DB
             populateGameFromReplay(replay, gameDB)
@@ -73,7 +74,7 @@ class ReplayPersister():
 
             gameDB = Game(md5hash=hash, filename=filename)
             
-            replay = vendor.sc2reader.read_file(stringio, processors=[Macro])
+            replay = vendor.sc2reader.read_file(stringio, processors=[Macro], apply=True)
             populateGameFromReplay(replay, gameDB)
             for player in replay.players:
                   self.buildnodes.populate_build(gameDB, player)
@@ -105,6 +106,12 @@ def didPlayerWin(player):
             return False
       else:
             return None
+
+def getStatArr(player, replay, stat):
+      theArr = [0] * (replay.length.seconds/60 + 1)
+      for minute,statvalue in getattr(player, stat + "_arr").items():
+            theArr[minute] = statvalue
+      return theArr
 
 def getWPMArr(player, replay):
       theArr = [0] * (replay.length.seconds/60 + 1)
@@ -177,6 +184,7 @@ def populateGameFromReplay(replay, gameDB):
       gameDB.duration_seconds = replay.length.seconds
       gameDB.save()
 
+      player_to_army = armyjs_map(replay)
       for player in replay.players:
             playerDB = getOrCreatePlayer(player)
 
@@ -185,11 +193,17 @@ def populateGameFromReplay(replay, gameDB):
             pigDB.chosen_race = player.pick_race[0]
             pigDB.race = player.play_race[0]
             pigDB.win = didPlayerWin(player)
+            pigDB.color = player.color.hex
+            pigDB.pid = player.pid
+            pigDB.armies_by_frame = player_to_army[player]
+
             if hasattr(player, "avg_apm"):
                   pigDB.apm = player.avg_apm
             if hasattr(player, "wpm"):
                   pigDB.wpm = player.wpm
             if hasattr(player, "wpm_arr"):
                   pigDB.wpm_by_minute = getWPMArr(player, replay)
+            if hasattr(player, "apm_arr"):
+                  pigDB.apm_by_minute = getStatArr(player, replay, "apm")
 
             pigDB.save()
