@@ -4,6 +4,7 @@ import os
 import os.path
 import sys
 import socket
+import djcelery
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -132,6 +133,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'south',
+    'djcelery',
+    'djkombu',
 #
 # only installed on dev server as of 20120214
 #
@@ -172,3 +175,7 @@ sys.path.append(VENDOR_ROOT)
 
 if socket.gethostname() == "David-Joergs-MacBook-Pro.local":
     from settings_dev import *
+
+djcelery.setup_loader()
+BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+CELERY_RESULT_DBURI = DATABASES['default']
