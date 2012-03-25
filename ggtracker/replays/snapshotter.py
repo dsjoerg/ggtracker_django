@@ -134,8 +134,8 @@ def armyjs_map(replay):
 			continue
 		firstseen = obj.first_selected
 		lastseen = obj.last_selected
-		if hasattr(obj, "last_removed"):
-			lastseen = max(lastseen, obj.last_removed)
+#		if hasattr(obj, "last_removed"):
+#			lastseen = max(lastseen, obj.last_removed)
 		if hasattr(obj, "birth_frame"):
 			firstseen = min(firstseen, obj.birth_frame)
 		if obj.first_selected > lastseen:
