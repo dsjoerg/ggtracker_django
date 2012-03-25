@@ -2,3 +2,4 @@ venv
 *.pyc
 *~
 celerybeat-schedule.db
+sc2reader_201203
