@@ -130,14 +130,14 @@ def Macro(replay):
         # If we don't have data for this version, we can't do any more.
         return replay
 
-    for player in replay.players:
-        player.wpm_arr = defaultdict(int)
-        player.apm_arr = defaultdict(int)
-        player.trained_unmatched = {}
+    for person in replay.people:
+        person.wpm_arr = defaultdict(int)
+        person.apm_arr = defaultdict(int)
+        person.trained_unmatched = {}
 
     # Gather data for WPM measurements
     for event in replay.events:
-        if event.is_local and event.is_player_action and not player.is_observer:
+        if event.is_local and event.is_player_action and not event.player.is_observer:
             player = event.player
             minute = event.second/60
             player.apm_arr[minute] += 1
