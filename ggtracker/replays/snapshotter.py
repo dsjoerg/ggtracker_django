@@ -165,8 +165,8 @@ def armyjs_map(replay):
 		result.close()
 		player_to_army[player] = finalstring
 
-	print "no_train: %s" % no_train
-	print "no_suitable_train: %s" % no_suitable_train
+#	print "no_train: %s" % no_train
+#	print "no_suitable_train: %s" % no_suitable_train
 
 	return player_to_army
 

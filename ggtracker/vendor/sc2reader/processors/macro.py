@@ -133,6 +133,7 @@ def Macro(replay):
     for player in replay.players:
         player.wpm_arr = defaultdict(int)
         player.apm_arr = defaultdict(int)
+        player.trained_unmatched = {}
 
     # Gather data for WPM measurements
     for event in replay.events:
