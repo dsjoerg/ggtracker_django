@@ -65,3 +65,6 @@ def buildnodes(request):
 
 def hirefireapp(request):
     return HttpResponse("[HireFire][Web] OK");
+
+def hirefireappinfo(request):
+    return HttpResponse('{"job_count":0}');

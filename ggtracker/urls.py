@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^upload.json$', 'replays.views.json_uploader', name="whatever"),
     url(r'^buildnodes$', 'replays.views.buildnodes', name="buildnodes"),
     url(r'^hirefireapp/test$', 'replays.views.hirefireapp', name="hirefireapp"),
+    url(r'^hirefireapp/', 'replays.views.hirefireappinfo', name="hirefireappinfo"),
 )
 
 urlpatterns += patterns('',
