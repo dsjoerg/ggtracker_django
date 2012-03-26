@@ -62,3 +62,6 @@ def buildnodes(request):
         response = HttpResponseServerError("problem var")
 
     return response
+
+def hirefireapp(request):
+    return HttpResponse("[HireFire][Web] OK");

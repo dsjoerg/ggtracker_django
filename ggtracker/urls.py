@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'ajax-upload$', 'replays.views.dj_uploader', name="my_ajax_upload"),
     url(r'^upload.json$', 'replays.views.json_uploader', name="whatever"),
     url(r'^buildnodes$', 'replays.views.buildnodes', name="buildnodes"),
+    url(r'^hirefireapp/test$', 'replays.views.hirefireapp', name="hirefireapp"),
 )
 
 urlpatterns += patterns('',
