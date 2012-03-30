@@ -3,12 +3,14 @@ from django.db import models
 class Replay(models.Model):
     md5hash = models.CharField(max_length=32, db_index=True)
     dropsc_id = models.IntegerField(max_length=255, null=True, blank=True, db_index=True)
+    source = models.CharField(max_length=64, db_index=True, null=True, blank=True)
 
     def __unicode__(self):
         return '(%d) %s' % (self.id, self.md5hash)
 
     def s3key(self):
         return '%s.SC2Replay' % self.md5hash
+
 
 class Map(models.Model):
     name = models.CharField(max_length=255, db_index=True)
