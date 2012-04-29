@@ -51,9 +51,14 @@ class ReplayPersister():
             # write it out to the DB
             populateGameFromReplay(replay, gameDB)
 
-            for player in replay.players:
-                  print "populating for %s" % player.name
-                  self.buildnodes.populate_build(gameDB, player)
+#
+# 20120427 dont populate buildnodes for now. Why slow down every users upload
+# for processing that isnt ready for prime-time?  We can go back and reprocess
+# replays later once weve figured out how we really want to do it.
+#
+#            for player in replay.players:
+#                  print "populating for %s" % player.name
+#                  self.buildnodes.populate_build(gameDB, player)
 
             #release this memory
             replaystringio.close()
