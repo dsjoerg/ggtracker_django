@@ -166,9 +166,8 @@ LOGGING = {
 
 AWS_ACCESS_KEY_ID = os.environ['S3_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['S3_SECRET']
-AWS_BUCKET_NAME = "ggtracker_replays"
-MINIMAP_BUCKET_NAME = "ggtmaps"
-REPLAYS_BUCKET_NAME = "ggtreplays"
+MINIMAP_BUCKET_NAME = os.environ['S3_MINIMAP_BUCKET']
+REPLAYS_BUCKET_NAME = os.environ['S3_REPLAY_BUCKET']
 
 VENDOR_ROOT = os.path.join(PROJECT_PATH, "vendor")
 sys.path.append(VENDOR_ROOT)
