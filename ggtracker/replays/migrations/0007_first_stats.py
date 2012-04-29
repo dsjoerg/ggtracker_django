@@ -8,11 +8,13 @@ from replays.models import Stat
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        avg_apm = Stat(name="avg_apm", description="average APM until the player leaves")
-        avg_apm.save()
-
-        wpm = Stat(name="wpm", description="average Workers Per Minute until the player leaves")
-        wpm.save()
+        # Can't add rows on migration because the models have changed!
+        # Leaving in here as a record of what happend though.
+        # avg_apm = Stat(name="avg_apm", description="average APM until the player leaves")
+        # avg_apm.save()
+        # wpm = Stat(name="wpm", description="average Workers Per Minute until the player leaves")
+        # wpm.save()
+        pass
 
     def backwards(self, orm):
         pass

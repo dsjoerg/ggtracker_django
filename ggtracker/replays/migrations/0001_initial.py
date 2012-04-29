@@ -7,9 +7,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        db.delete_table('replays_game')
-
         # Adding model 'Game'
         db.create_table('replays_game', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -18,7 +15,6 @@ class Migration(SchemaMigration):
             ('winning_team', self.gf('django.db.models.fields.IntegerField')()),
         ))
         db.send_create_signal('replays', ['Game'])
-
 
     def backwards(self, orm):
         

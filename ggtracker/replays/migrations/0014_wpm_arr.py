@@ -8,8 +8,11 @@ from replays.models import Stat
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        wpm_arr = Stat(name="wpm_arr", description="string array of workers built per minute of the game")
-        wpm_arr.save()
+        # Can't add rows on migration because the models have changed!
+        # Leaving in here as a record of what happend though.
+        # wpm_arr = Stat(name="wpm_arr", description="string array of workers built per minute of the game")
+        # wpm_arr.save()
+        pass
 
     def backwards(self, orm):
         pass
