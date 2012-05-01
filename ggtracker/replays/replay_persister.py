@@ -39,11 +39,14 @@ class ReplayPersister():
             gameDBs = Game.objects.filter(replay__id__exact=id)
             assert gameDBs.count() <= 1
             if gameDBs.count() == 1:
+                  # make a new game record, but with the same ID as the old one
                   gameDB = gameDBs[0]
+                  oldID = gameDB.id
                   gameDB.delete()
-
-            # make a new game record
-            gameDB = Game(replay=replayDB)
+                  gameDB = Game(id=oldID, replay=replayDB)
+            else:
+                  # make a new game record
+                  gameDB = Game(replay=replayDB)
 
             # parse the replay into memory
             replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro], apply=True)
