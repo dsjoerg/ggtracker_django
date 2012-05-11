@@ -31,7 +31,7 @@ class ReplayPersister():
 
       # this function gets called when uploading through the
       # ruby-served page
-      def upload_from_ruby(self, id):
+      def upload_from_ruby(self, id, sender_subdomain):
             replayDB = Replay.objects.get(id__exact=id)
             replaystringio = self.get_file_from_s3("%s.SC2Replay" % replayDB.md5hash)
 
@@ -40,13 +40,15 @@ class ReplayPersister():
             assert gameDBs.count() <= 1
             if gameDBs.count() == 1:
                   # make a new game record, but with the same ID as the old one
+                  # set the new subdomain only if it used to be blank
                   gameDB = gameDBs[0]
+                  subdomain = gameDB.subdomain if gameDB.subdomain else sender_subdomain
                   oldID = gameDB.id
                   gameDB.delete()
-                  gameDB = Game(id=oldID, replay=replayDB)
+                  gameDB = Game(id=oldID, replay=replayDB, subdomain=subdomain)
             else:
                   # make a new game record
-                  gameDB = Game(replay=replayDB)
+                  gameDB = Game(replay=replayDB, subdomain=sender_subdomain)
 
             # parse the replay into memory
             replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro], apply=True)

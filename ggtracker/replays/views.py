@@ -20,8 +20,9 @@ def json_uploader(request):
     if request.method != "GET":
         return HttpResponseBadRequest("AJAX request not valid")
     id = request.GET['id']
+    sender_subdomain = request.GET['sender_subdomain']
     try:
-      if replayPersister.upload_from_ruby(id):
+      if replayPersister.upload_from_ruby(id, sender_subdomain):
           return HttpResponse("no problem")
       else:
           return HttpResponseServerError("problem")

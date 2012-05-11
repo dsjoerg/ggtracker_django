@@ -32,6 +32,7 @@ class Game(models.Model):
     duration_seconds = models.IntegerField(null=True)
     average_league = models.IntegerField(null=True, blank=True, db_index=True)
     processed_time = models.DateTimeField(null=True, db_index=True)
+    subdomain = models.CharField(max_length=50, db_index=True, default='')
 
     def __unicode__(self):
         return '(%d) %s' % (self.id, self.map.name)
