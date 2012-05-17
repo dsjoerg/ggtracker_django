@@ -15,3 +15,4 @@ mpyq==0.2.0
 psycopg2==2.4.4
 python-dateutil==1.5
 wsgiref==0.1.2
+-e git://github.com/GraylinKim/sc2reader.git@s2gs#egg=sc2reader
