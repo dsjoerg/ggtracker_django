@@ -1,18 +1,47 @@
+# Built-ins
+import json
 import Image
 import hashlib
-import boto
-import vendor.sc2reader
-import StringIO
-from buildnodes import *
-
-
-from models import *
-from snapshotter import *
-
 from datetime import datetime
+from cStringIO import StringIO
+
+# 3rd party
+import boto
+import sc2reader
+
+# Local
+from models import *
+from buildnodes import *
 from django.conf import settings
-from vendor.sc2reader.processors.macro import Macro
-from boto.s3.key import Key
+
+import replay_processors
+
+
+# Register all the sc2reader plugins; order matters!
+sc2reader.register_plugin('Replay',replay_processors.APMTracker)
+sc2reader.register_plugin('Replay',replay_processors.WWPMTracker)
+sc2reader.register_plugin('Replay',replay_processors.TrainingTracker)
+sc2reader.register_plugin('Replay',sc2reader.plugins.SelectionTracker)
+# These require Selection Tracking
+sc2reader.register_plugin('Replay',replay_processors.ActivityTracker)
+sc2reader.register_plugin('Replay',replay_processors.OwnershipTracker)
+#Also requires Training and Ownership Tracking
+sc2reader.register_plugin('Replay',replay_processors.LifespanTracker)
+
+def armyjs_map(replay):
+    """Creates a map of player => json array of army units in this format:
+        [ [unit type, birth, death], [unit type, birth, death], ... ]
+    """
+    army_map = dict()
+    for player in replay.players:
+        player_army = list()
+        for unit in player.units:
+            unit_type = unit.__class__.__name__.lower()
+            unit_type = re.replace(' \((burrowed|sieged)\)', '', unit_type)
+            if unit_type in replay_processors.army_values:
+                player_army.append(unit_type, unit.birth, unit.death)
+        army_map[player] = json.dumps(player_army)
+    return army_map
 
 class ReplayPersister():
 
@@ -22,22 +51,24 @@ class ReplayPersister():
                                                 .lookup(settings.REPLAYS_BUCKET_NAME)
             self.buildnodes = BuildNodes()
 
-      def get_file_from_s3(self, s3key):
-            k = Key(self.replaybucket)
-            k.key = s3key
-            stringio = StringIO.StringIO()
-            k.get_contents_to_file(stringio)
-            return stringio
+      def get_replay_file(self, s3_key):
+            replay_file = StringIO()
+            key = boto.s3.Key(self.replaybucket, s3_key)
+            return key.get_contents_to_file(replay_file)
 
       # this function gets called when uploading through the
       # ruby-served page
       def upload_from_ruby(self, id, sender_subdomain):
             replayDB = Replay.objects.get(id__exact=id)
-            replaystringio = self.get_file_from_s3("%s.SC2Replay" % replayDB.md5hash)
+            s3_key = "{0}.SC2Replay".format(replayDB.md5hash)
+            replay_file = self.get_replay_file(s3_key)
 
             # delete any Game data associated with this replay
             gameDBs = Game.objects.filter(replay__id__exact=id)
+
+            # TODO: There should be a better way to die here
             assert gameDBs.count() <= 1
+
             if gameDBs.count() == 1:
                   # make a new game record, but with the same ID as the old one
                   # set the new subdomain only if it used to be blank
@@ -51,7 +82,7 @@ class ReplayPersister():
                   gameDB = Game(replay=replayDB, subdomain=sender_subdomain)
 
             # parse the replay into memory
-            replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro], apply=True)
+            replay = sc2reader.load_replay(replay_file)
 
             # write it out to the DB
             populateGameFromReplay(replay, gameDB)
@@ -66,8 +97,8 @@ class ReplayPersister():
 #                  self.buildnodes.populate_build(gameDB, player)
 
             #release this memory
-            replaystringio.close()
-            
+            replay_file.close()
+
             return True
 
       # this function gets called when uploading through the
@@ -83,7 +114,7 @@ class ReplayPersister():
                   gameDB.delete()
 
             gameDB = Game(md5hash=hash, filename=filename)
-            
+
             replay = vendor.sc2reader.read_file(stringio, processors=[Macro], apply=True)
             populateGameFromReplay(replay, gameDB)
             for player in replay.players:
@@ -174,7 +205,7 @@ def getOrCreateMap(replay):
             bucket = boto.connect_s3(settings.AWS_ACCESS_KEY_ID,
                                      settings.AWS_SECRET_ACCESS_KEY)\
                                      .lookup(settings.MINIMAP_BUCKET_NAME)
-            k = Key(bucket)
+            k = boto.s3.Key(bucket)
             k.key = "%s_%i.png" % (replay.map.hash, MAPHEIGHT)
             k.set_contents_from_string(finalIO.getvalue())
 
