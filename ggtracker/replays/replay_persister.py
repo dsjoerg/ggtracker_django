@@ -11,7 +11,7 @@ import sc2reader
 
 # Local
 from models import *
-from buildnodes import *
+#from buildnodes import *
 from django.conf import settings
 
 import replay_processors
@@ -49,7 +49,7 @@ class ReplayPersister():
             self.replaybucket = boto.connect_s3(settings.AWS_ACCESS_KEY_ID,
                                                 settings.AWS_SECRET_ACCESS_KEY)\
                                                 .lookup(settings.REPLAYS_BUCKET_NAME)
-            self.buildnodes = BuildNodes()
+            #self.buildnodes = BuildNodes()
 
       def get_replay_file(self, s3_key):
             replay_file = StringIO()
@@ -117,8 +117,8 @@ class ReplayPersister():
 
             replay = vendor.sc2reader.read_file(stringio, processors=[Macro], apply=True)
             populateGameFromReplay(replay, gameDB)
-            for player in replay.players:
-                  self.buildnodes.populate_build(gameDB, player)
+            #for player in replay.players:
+            #    self.buildnodes.populate_build(gameDB, player)
 
 
 

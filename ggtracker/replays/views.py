@@ -9,11 +9,11 @@ from ajaxuploader.views import AjaxFileUploader
 from upload import StringUploadBackend
 from replay_persister import *
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
-from buildnodes import *
+#from buildnodes import *
 
 
 replayPersister = ReplayPersister()
-buildNodes = BuildNodes()
+#buildNodes = BuildNodes()
 uploader = AjaxFileUploader(backend=StringUploadBackend, completeListener=replayPersister)
 
 def json_uploader(request):
