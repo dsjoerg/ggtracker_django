@@ -21,12 +21,12 @@ import replay_processors
 sc2reader.register_plugin('Replay',replay_processors.APMTracker)
 sc2reader.register_plugin('Replay',replay_processors.WWPMTracker)
 sc2reader.register_plugin('Replay',replay_processors.TrainingTracker)
-sc2reader.register_plugin('Replay',sc2reader.plugins.SelectionTracker)
+sc2reader.register_plugin('Replay',sc2reader.plugins.replay.SelectionTracker)
 # These require Selection Tracking
 sc2reader.register_plugin('Replay',replay_processors.ActivityTracker)
 sc2reader.register_plugin('Replay',replay_processors.OwnershipTracker)
 #Also requires Training and Ownership Tracking
-sc2reader.register_plugin('Replay',replay_processors.LifespanTracker)
+sc2reader.register_plugin('Replay',replay_processors.LifeSpanTracker)
 
 def armyjs_map(replay):
     """Creates a map of player => json array of army units in this format:
@@ -115,7 +115,7 @@ class ReplayPersister():
 
             gameDB = Game(md5hash=hash, filename=filename)
 
-            replay = vendor.sc2reader.read_file(stringio, processors=[Macro], apply=True)
+            replay = sc2reader.load_replay(stringio)
             populateGameFromReplay(replay, gameDB)
             #for player in replay.players:
             #    self.buildnodes.populate_build(gameDB, player)

@@ -8,8 +8,8 @@ import djcelery
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
-DEBUG = False
-TEMPLATE_DEBUG = False
+DEBUG = True
+TEMPLATE_DEBUG = True
 
 ADMINS = (
     ('David Joerg', 'dsjoerg@ggtracker.com'),
@@ -168,9 +168,6 @@ AWS_ACCESS_KEY_ID = os.environ['S3_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['S3_SECRET']
 MINIMAP_BUCKET_NAME = os.environ['S3_MINIMAP_BUCKET']
 REPLAYS_BUCKET_NAME = os.environ['S3_REPLAY_BUCKET']
-
-VENDOR_ROOT = os.path.join(PROJECT_PATH, "vendor")
-sys.path.append(VENDOR_ROOT)
 
 if socket.gethostname() == "David-Joergs-MacBook-Pro.local":
     from settings_dev import *
