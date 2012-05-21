@@ -242,4 +242,4 @@ def populateGameFromReplay(replay, gameDB):
         if hasattr(player, "wpm"):
             pigDB.wpm = sum(player.wwpm.values())/float(len(player.wwpm))
 
-    pigDB.save()
+        pigDB.save()
