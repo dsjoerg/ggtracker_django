@@ -55,7 +55,8 @@ class ReplayPersister():
       def get_replay_file(self, s3_key):
             replay_file = StringIO()
             key = boto.s3.key.Key(self.replaybucket, s3_key)
-            return key.get_contents_to_file(replay_file)
+            key.get_contents_to_file(replay_file)
+            return replay_file
 
       # this function gets called when uploading through the
       # ruby-served page
@@ -96,9 +97,6 @@ class ReplayPersister():
 #            for player in replay.players:
 #                  print "populating for %s" % player.name
 #                  self.buildnodes.populate_build(gameDB, player)
-
-            #release this memory
-            replay_file.close()
 
             return True
 

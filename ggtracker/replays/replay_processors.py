@@ -1,3 +1,4 @@
+import re
 from collections import defaultdict, deque
 from sc2reader.events import *
 from sc2reader.plugins.utils import plugin
@@ -37,7 +38,7 @@ army_values = {
         'reaper': [50,50,2],
         'ghost': [200,100,2],
 
-        #Facotry
+        #Factory
         'hellion': [100,0,2],
         'siegetank': [150,125,2],
         'thor': [300,200,6],
@@ -190,9 +191,11 @@ def TrainingTracker(replay):
     for player in replay.players:
         player.train_commands = defaultdict(list)
         for event in filter(efilter, player.events):
-            ability_name = event.ability_name.lower().replace(' ','').replace('warpin','')
-            if ability_name in train_commands:
-                print ability_name+" was found"
+            #if re.match("Archon", event.ability_name):
+            print event.ability_name
+
+            ability_name = re.sub('warpin|mergeinto|morphto','',event.ability_name.lower().replace(' ',''))
+            if ability_name in army_values:
                 player.train_commands[ability_name].append(event.frame)
 
 @plugin
