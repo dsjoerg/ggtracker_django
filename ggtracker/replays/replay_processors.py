@@ -192,7 +192,7 @@ def TrainingTracker(replay):
         player.train_commands = defaultdict(list)
         for event in filter(efilter, player.events):
             #if re.match("Archon", event.ability_name):
-            print event.ability_name
+            #print event.ability_name
 
             ability_name = re.sub('warpin|mergeinto|morphto','',event.ability_name.lower().replace(' ',''))
             if ability_name in army_values:
