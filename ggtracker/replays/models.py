@@ -143,3 +143,15 @@ class PlayerInGameString(models.Model):
 
 class Sc2Ranks(models.Model):
     pass
+
+class GameSummary(models.Model):
+  # sha1 is 40 bytes, doubling up just in case.
+  s2gs_hash = models.CharField(max_length=80, db_index=True)
+
+  realm = models.CharField(max_length=2, db_index=True)
+  game_id = models.ForeignKey('Game', null=True, blank=True)
+
+  first_seen_at = models.DateTimeField(null=True, db_index=True)
+  first_retrieved_at = models.DateTimeField(null=True, db_index=True)
+  status = models.IntegerField(null=False, blank=False, db_index=True, default=0)
+  
