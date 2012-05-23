@@ -213,7 +213,7 @@ def populateGameFromReplay(replay, gameDB):
     gameDB.release_string = replay.release_string
     gameDB.game_time = datetime.utcfromtimestamp(replay.unix_timestamp)
     gameDB.winning_team = winning_team(replay)
-    gameDB.game_type = replay.type
+    gameDB.game_type = replay.real_type
     gameDB.category = replay.category
     gameDB.duration_seconds = replay.length.seconds
     gameDB.save()
