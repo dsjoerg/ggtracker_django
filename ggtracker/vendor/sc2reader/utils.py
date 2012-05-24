@@ -9,8 +9,12 @@ import struct
 import textwrap
 
 from itertools import groupby
+from datetime import timedelta
 
 from sc2reader.exceptions import FileError
+from sc2reader.data.v140_ import Data_140_ as Data
+from sc2reader.constants import COLOR_CODES, BUILD_ORDER_UPGRADES
+
 
 LITTLE_ENDIAN,BIG_ENDIAN = '<','>'
 
@@ -213,25 +217,65 @@ class ReplayBuffer(object):
         else:
             raise ValueError()
 
-    def read_data_struct(self):
+    def read_data_struct(self, indent=0, key=None):
         """
         Read a Blizzard data-structure. Structure can contain strings, lists,
         dictionaries and custom integer types.
         """
+        debug = False
+
         #The first byte serves as a flag for the type of data to follow
         datatype = self.read_byte()
-        if datatype == 0x02:
+        prefix = hex(self.tell())+"\t"*indent
+        if key != None:
+            prefix+="{0}:".format(key)
+        prefix+=" {0}".format(datatype)
+
+        if datatype == 0x00:
+            #0x00 is an array where the first X bytes mark the number of entries in
+            #the array. See variable int documentation for details.
+            entries = self.read_variable_int()
+            prefix+=" ({0})".format(entries)
+            if debug: print prefix
+            data = [self.read_data_struct(indent+1,i) for i in range(entries)]
+
+        elif datatype == 0x01:
+            #0x01 is an array where the first X bytes mark the number of entries in
+            #the array. See variable int documentation for details.
+            #print self.peek(10)
+            self.read_chars(2).encode("hex")
+            entries = self.read_variable_int()
+            prefix+=" ({0})".format(entries)
+            if debug: print prefix
+            data = [self.read_data_struct(indent+1,i) for i in range(entries)]
+
+        elif datatype == 0x02:
             #0x02 is a byte string with the first byte indicating
             #the length of the byte string to follow
-            count = self.read_count()
-            return self.read_string(count)
+            entries = self.read_count()
+            data = self.read_string(entries)
+            prefix+=" ({0}) - {1}".format(entries,data)
+            if debug: print prefix
+
+        elif datatype == 0x03:
+            #0x03 is an unknown data type where the first byte appears
+            #to have no effect and kicks back the next instruction
+            flag = self.read_byte()
+            if debug: print prefix
+            data = self.read_data_struct(indent,key)
 
         elif datatype == 0x04:
-            #0x04 is an serialized data list with first two bytes always 01 00
-            #and the next byte indicating the number of elements in the list
-            #each element is a serialized data structure
-            self.skip(2)    #01 00
-            return [self.read_data_struct() for i in range(self.read_count())]
+            #0x04 is an unknown data type where the first byte of information
+            #is a switch (1 or 0) that can trigger another structure to be
+            #read.
+            flag = self.read_byte()
+            if flag:
+                if debug: print prefix
+                data = self.read_data_struct(indent,key)
+            else:
+                data = 0
+                prefix+=" - {0}".format(data)
+                if debug: print prefix
 
         elif datatype == 0x05:
             #0x05 is a serialized key,value structure with the first byte
@@ -239,20 +283,31 @@ class ReplayBuffer(object):
             #When looping through the pairs, the first byte is the key,
             #followed by the serialized data object value
             data = dict()
-            for i in range(self.read_count()):
-                count = self.read_count()
-                key,value = count, self.read_data_struct()
-                data[key] = value #Done like this to keep correct parse order
-            return data
+            entries = self.read_count()
+            prefix+=" ({0})".format(entries)
+            if debug: print prefix
+            for i in range(entries):
+                key = self.read_count()
+                data[key] = self.read_data_struct(indent+1,key) #Done like this to keep correct parse order
 
         elif datatype == 0x06:
-            return self.read_byte()
+            data = self.read_byte()
+            prefix+=" - {0}".format(data)
+            if debug: print prefix
         elif datatype == 0x07:
-            return self.read_int()
+            data = self.read_chars(4)
+            prefix+=" - {0}".format(data)
+            if debug: print prefix
         elif datatype == 0x09:
-            return self.read_variable_int()
+            data = self.read_variable_int()
+            prefix+=" - {0}".format(data)
+            if debug: print prefix
+        else:
+            if debug: print prefix
+            raise TypeError("Unknown Data Structure: '%s'" % datatype)
 
-        raise TypeError("Unknown Data Structure: '%s'" % datatype)
+        return data
+
 
     def read_object_type(self, read_modifier=False):
         """ Object type is big-endian short16 """
@@ -600,18 +655,25 @@ def get_files( path, regex=None, allow=True, exclude=[],
 
     return files
 
-from datetime import timedelta
 class Length(timedelta):
+    """
+        Extends the builtin timedelta class. See python docs for more info on
+        what capabilities this gives you.
+    """
+
     @property
     def hours(self):
+        """The number of hours in represented."""
         return self.seconds/3600
 
     @property
     def mins(self):
-        return self.seconds/60
+        """The number of minutes in excess of the hours."""
+        return (self.seconds/60)%60
 
     @property
     def secs(self):
+        """The number of seconds in excess of the minutes."""
         return self.seconds%60
 
     def __str__(self):
@@ -619,6 +681,7 @@ class Length(timedelta):
             return "{0:0>2}.{1:0>2}.{2:0>2}".format(self.hours,self.mins,self.secs)
         else:
             return "{0:0>2}.{1:0>2}".format(self.mins,self.secs)
+
 
 class RangeMap(dict):
     def add_range(self, start, end, reader_set):
@@ -692,3 +755,40 @@ class Formatter(argparse.RawTextHelpFormatter):
             lines.extend(new_lines or [' '])
 
         return lines
+
+def get_unit(type_int):
+    """
+    Takes an int, i, with (i & 0xff000000) = 0x01000000
+    and returns the corresponding unit/structure
+    """
+    # Try to parse a unit
+    unit_code = ((type_int & 0xff) << 8) | 0x01
+    if unit_code in Data.types:
+        unit_name = Data.type(unit_code).name
+    else:
+        unit_name = "Unknown Unit ({0:X})".format(type_int)
+
+    return dict(name=unit_name, type_int=hex(type_int))
+
+
+def get_research(type_int):
+    """
+    Takes an int, i, with (i & 0xff000000) = 0x02000000
+    and returns the corresponding research/upgrade
+    """
+    research_code = ((type_int & 0xff) << 8) | 0x02
+    if research_code in BUILD_ORDER_UPGRADES:
+        research_name = BUILD_ORDER_UPGRADES[research_code]
+    else:
+        research_name = "Unknown upgrade ({0:X})".format(research_code)
+
+    return dict(name=research_name, type_int=hex(type_int))
+
+def parse_hash(hash_string):
+    """Parse a hash to useful data"""
+    # TODO: this could be used when processing replays.initData as well
+    return {
+        'server': hash_string[4:8].strip(),
+        'hash' : hash_string[8:].encode('hex'),
+        'type' : hash_string[0:4]
+        }

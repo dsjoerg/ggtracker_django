@@ -613,3 +613,105 @@ class SelectionEvent(Event):
             return self._str_prefix() + "Selection: " + ', '.join(str(o) for o in self.selected)
         else:
             return self._str_prefix() + "Selection: " + ', '.join(str(o) for o in self.objects)
+
+
+class PlayerSummary():
+    """
+    A class to represent a player in the game summary (.s2gs)
+    """
+    stats_pretty_names = {
+        'R' : 'Resources',
+        'U' : 'Units',
+        'S' : 'Structures',
+        'O' : 'Overview',
+        'AUR' : 'Average Unspent Resources',
+        'RCR' : 'Resource Collection Rate',
+        'WC' : 'Workers Created',
+        'UT' : 'Units Trained',
+        'KUC' : 'Killed Unit Count',
+        'SB' : 'Structures Built',
+        'SRC' : 'Structures Razed Count'
+        }
+
+    #: The index of the player in the game
+    pid = int()
+
+    #: The index of the players team in the game
+    teamid = int()
+
+    #: The race the player used
+    race = str()
+
+    #: If the player is a computer
+    is_ai = False
+
+    #: If the player won the game
+    is_winner = False
+
+    #: Battle.Net id of the player
+    bnetid = int()
+
+    #: Subregion id of player
+    subregion = int()
+
+    #: unknown1
+    unknown1 = int()
+
+    #: unknown2
+    unknown2 = dict()
+
+    #: :class:`Graph` of player army values over time (seconds)
+    army_graph = None
+
+    #: :class:`Graph` of player income over time (seconds)
+    income_graph = None
+
+    #: Stats from the game in a dictionary
+    stats = dict()
+
+    def __init__(self, pid):
+        self.unknown2 = dict()
+        self.stats = dict()
+
+        self.pid = pid
+
+    def __str__(self):
+        if not self.is_ai:
+            return '{} - {} - {}/{}/'.format(self.teamid, self.race, self.subregion, self.bnetid)
+        else:
+            return '{} - {} - AI'.format(self.teamid, self.race)
+
+    def get_stats(self):
+        s = ''
+        for k in self.stats:
+            s += '{}: {}\n'.format(self.stats_pretty_names[k], self.stats[k])
+        return s.strip()
+
+# TODO: Are there libraries with classes like this in them
+class Graph():
+    """A class to represent a graph on the score screen."""
+
+    #: Times in seconds on the x-axis of the graph
+    times = list()
+
+    #: Values on the y-axis of the graph
+    values = list()
+
+    def __init__(self, x, y, xy_list=None):
+        self.times = list()
+        self.values = list()
+
+        if xy_list:
+            for x, y in xy_list:
+                self.times.append(x)
+                self.values.append(y)
+        else:
+            self.times = x
+            self.values = y
+
+    def as_points(self):
+        """ Get the graph as a list of (x, y) tuples """
+        return zip(self.times, self.values)
+
+    def __str__(self):
+        return "Graph with {0} values".format(len(self.times))

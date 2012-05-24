@@ -28,7 +28,7 @@ import os
 import mpyq
 
 #Package imports
-from sc2reader import config, objects, utils, processors, exceptions
+from sc2reader import config, objects, utils, processors, exceptions, resources, constants
 
 
 class Reader(object):
