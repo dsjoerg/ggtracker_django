@@ -53,6 +53,7 @@ class Player(models.Model):
     best_race = models.CharField(max_length=1, null=True, db_index=True)
     best_num_players = models.IntegerField(null=True)
     best_is_random = models.NullBooleanField()
+    s2gs_last_retrieved_at = models.DateTimeField(null=True)
 
     def __unicode__(self):
         return '(%d) %s / %s' % (self.id, '' if self.name is None else self.name, self.gateway)
@@ -154,6 +155,8 @@ class GameSummary(models.Model):
   first_seen_at = models.DateTimeField(null=True, db_index=True)
   first_retrieved_at = models.DateTimeField(null=True, db_index=True)
   status = models.IntegerField(null=False, blank=False, db_index=True, default=0)
+  league = models.IntegerField(db_index=True, null=True, blank=True)
+  
 
 class Graph(models.Model):
     pass
