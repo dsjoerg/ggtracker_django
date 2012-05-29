@@ -14,7 +14,7 @@ from mpyq import MPQArchive
 from sc2reader import utils
 from sc2reader import readers, data
 from sc2reader.objects import Player, Observer, Team, PlayerSummary, Graph
-from sc2reader.constants import REGIONS, LOCALIZED_RACES, GAME_SPEED_FACTOR, GAME_SPEED_CODES, RACE_CODES, PLAYER_TYPE_CODES, TEAM_COLOR_CODES, GAME_FORMAT_CODES, GAME_TYPE_CODES, DIFFICULTY_CODES
+from sc2reader.constants import REGIONS, LOCALIZED_RACES, GAME_SPEED_FACTOR, GAME_SPEED_CODES, RACE_CODES, PLAYER_TYPE_CODES, TEAM_COLOR_CODES, GAME_FORMAT_CODES, GAME_TYPE_CODES, DIFFICULTY_CODES, GAME_TYPE_TO_TEAM_NUM_PROP
 
 
 class Resource(object):
@@ -174,7 +174,6 @@ class GameSummary(Resource):
     def load_player_graphs(self):
         # Parse graph and stats stucts, for each player
         for pid, p in self.player.items():
-#            print type(pid), type(p)
             # Graph stuff
             xy = [(o[2], o[0]) for o in self.parts[4][0][2][1][p.pid]]
             p.army_graph = Graph([], [], xy_list=xy)
@@ -191,6 +190,8 @@ class GameSummary(Resource):
             p.stats[self.stats_keys[len(stats_struct)]] = self.parts[4][0][0][1][p.pid][0][0]
 
     def load_player_info(self):
+        team_num_prop = self.team_num_prop()
+        
         # Parse player structs, 16 is the maximum amount of players
         for i in range(16):
             # Check if player, skip if not
@@ -201,9 +202,8 @@ class GameSummary(Resource):
 
             player = PlayerSummary(player_struct[0][0])
             player.race = RACE_CODES[''.join(reversed(player_struct[2]))]
-
-            # TODO: Grab team id from lobby_player_properties
-            player.teamid = 0
+            teamnumstring = self.player_props[player.pid][team_num_prop]
+            player.teamid = int(teamnumstring.replace("\x00","").replace("T",""))
 
             player.is_winner = (player_struct[1][0] == 0)
             if player.is_winner:
@@ -301,8 +301,11 @@ class GameSummary(Resource):
         left_lobby = deque([k for k in defs if defs[k]['lobby_prop']])
 
         lobby_props = dict()
+        lobby_cycle_count = 0
+
         # We cycle through all property values 'til we're done
-        while len(left_lobby) > 0:
+        while len(left_lobby) > 0 and lobby_cycle_count < 10000:
+            lobby_cycle_count = lobby_cycle_count + 1
             propid = left_lobby.popleft()
             can_be_parsed = True
             active = True
@@ -324,6 +327,10 @@ class GameSummary(Resource):
                 continue
             # Nice! We've parsed a property
             lobby_props[propid] = defs[propid]['vals'][vals[propid]['vals'][0]][0]
+
+        print "Did", lobby_cycle_count, "rounds of lobby processing"
+        if lobby_cycle_count == 10000:
+            print "Eww.  So, lobby_props are", lobby_props
 
         player_props = [dict() for pid in range(16)]
         # Parse each player separately (this is required :( )
@@ -362,6 +369,17 @@ class GameSummary(Resource):
 
         self.lobby_props = lobby_props
         self.player_props = player_props
+
+
+    def game_type(self):
+        if self.lobby_props[1001].replace("\x00","") == "yes":
+            return self.lobby_props[2001].replace("\x00","")
+        else:
+            return self.lobby_props[2000].replace("\x00","")
+
+
+    def team_num_prop(self):
+        return GAME_TYPE_TO_TEAM_NUM_PROP[self.game_type()]
 
     def __str__(self):
         return "{} - {} {}".format(time.ctime(self.time),self.game_length,

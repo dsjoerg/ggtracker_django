@@ -8,11 +8,13 @@ from django.template import RequestContext
 from ajaxuploader.views import AjaxFileUploader
 from upload import StringUploadBackend
 from replay_persister import *
+from s2gs_persister import *
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 from buildnodes import *
 
 
 replayPersister = ReplayPersister()
+s2gsPersister = S2GSPersister()
 buildNodes = BuildNodes()
 uploader = AjaxFileUploader(backend=StringUploadBackend, completeListener=replayPersister)
 
@@ -23,6 +25,20 @@ def json_uploader(request):
     sender_subdomain = request.GET['sender_subdomain']
     try:
       if replayPersister.upload_from_ruby(id, sender_subdomain):
+          return HttpResponse("no problem")
+      else:
+          return HttpResponseServerError("problem")
+    except Exception, e:
+      print "Exception! ", e
+      traceback.print_exc()
+      return HttpResponseServerError("big problem. check the logs.")
+
+def s2gs_uploader(request):
+    if request.method != "GET":
+        return HttpResponseBadRequest("AJAX request not valid")
+    id = request.GET['id']
+    try:
+      if s2gsPersister.upload(id):
           return HttpResponse("no problem")
       else:
           return HttpResponseServerError("problem")

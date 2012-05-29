@@ -187,6 +187,22 @@ LOBBY_PROPERTY_NAMES = {
     3010 : 'unknown3',       #no/yes   (Never required)
 }
 
+GAME_TYPE_TO_TEAM_NUM_PROP = {
+    "1v1": 2002,
+    "2v2": 2003,
+    "3v3": 2004,
+    "4v4": 2005,
+    "FFA": 2006,
+    "5v5": 2007,
+    "6v6": 2008,
+    "t2": 2011,
+    "t3": 2012,
+    "t4": 2013,
+    "t5": 2014,
+    "FFA": 2017,
+    "Cust": 2018
+    }
+
 BUILD_ORDER_UPGRADES = {
     # Protoss
     
