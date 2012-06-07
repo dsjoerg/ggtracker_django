@@ -3,13 +3,16 @@ import hashlib
 import boto
 import vendor.sc2reader
 import StringIO
+import pytz
+from s2gs_persister import *
 from buildnodes import *
-
 
 from models import *
 from snapshotter import *
 
 from datetime import datetime
+from datetime import timedelta
+from pytz import timezone
 from django.conf import settings
 from vendor.sc2reader.processors.macro import Macro
 from boto.s3.key import Key
@@ -34,24 +37,36 @@ class ReplayPersister():
       def upload_from_ruby(self, id, sender_subdomain):
             replayDB = Replay.objects.get(id__exact=id)
             replaystringio = self.get_file_from_s3("%s.SC2Replay" % replayDB.md5hash)
+            replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro], apply=True)
 
-            # delete any Game data associated with this replay
-            gameDBs = Game.objects.filter(replay__id__exact=id)
-            assert gameDBs.count() <= 1
-            if gameDBs.count() == 1:
-                  # make a new game record, but with the same ID as the old one
+            first_player = getOrCreatePlayer(replay.players[0])
+            endtime = datetime.utcfromtimestamp(replay.unix_timestamp)
+            gamesecs = replay.length.seconds
+            realsecs = gamesecs / 1.4
+            starttime = endtime - timedelta(seconds=realsecs)
+            utc = pytz.utc
+            eastern = timezone('US/Eastern')
+            utc_starttime = utc.localize(starttime)
+            loc_starttime = utc_starttime.astimezone(eastern)
+            gameDBs = S2GSPersister.games_with_player_and_start(first_player, loc_starttime)
+            print "Game started at %(starttime)s, lasted %(realsecs)i real seconds and %(gamesecs)i game seconds" % {"starttime": loc_starttime, "realsecs": realsecs, "gamesecs": gamesecs}
+
+            if len(list(gameDBs)) == 1:
+                  # this could either be a reupload of a replay,
+                  # or we only had the s2gs before.
                   # set the new subdomain only if it used to be blank
+                  #
                   gameDB = gameDBs[0]
-                  subdomain = gameDB.subdomain if gameDB.subdomain else sender_subdomain
-                  oldID = gameDB.id
-                  gameDB.delete()
-                  gameDB = Game(id=oldID, replay=replayDB, subdomain=subdomain)
+                  if not gameDB.subdomain:
+                        gameDB.subdomain = sender_subdomain 
+                  gameDB.replay = replayDB
+            elif len(list(gameDBs)) > 1:
+                  print "Oooh, more than one game found for replay %(replay_id)i. Game IDs:" % {"replay_id": int(id)}
+                  for gameDB in gameDBs:
+                        print gameDB.id
             else:
                   # make a new game record
                   gameDB = Game(replay=replayDB, subdomain=sender_subdomain)
-
-            # parse the replay into memory
-            replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro], apply=True)
 
             # write it out to the DB
             populateGameFromReplay(replay, gameDB)
@@ -136,6 +151,9 @@ def getOrCreatePlayer(player):
       assert playerDBs.count() <= 1
       if playerDBs.count() == 1:
             playerDB = playerDBs[0]
+            if playerDB.name is None or playerDB.name == "":
+                  playerDB.name = player.name
+                  playerDB.save()
       else:
             playerDB = createPlayer(player)
 
@@ -197,6 +215,11 @@ def populateGameFromReplay(replay, gameDB):
       player_to_army = armyjs_map(replay)
       for player in replay.players:
             playerDB = getOrCreatePlayer(player)
+
+            # if there are any PIGs for this game, blow them away.
+            # we have all the interesting PIG data in our replay
+            pigsDB = PlayerInGame.objects.filter(player=playerDB, game=gameDB)
+            pigsDB.delete()
 
             pigDB = PlayerInGame(game=gameDB, player=playerDB)
             pigDB.team = player.team.number

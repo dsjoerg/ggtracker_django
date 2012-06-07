@@ -75,6 +75,25 @@ class S2GSPersister():
                                        win=s2gsplayer.is_winner)
                   pigDB.save()
 
+      # find any games that had the given player and started within 15 seconds of the given time,
+      # which is a datetime localized to US Eastern time.
+      @staticmethod
+      def games_with_player_and_start(player, loc_starttime):
+            #
+            # Game.game_time is the end time of the replay.  We compute the games start time
+            # by translating its duration_seconds into real time (we assume Faster!),
+            # and then comparing to the given loc_starttime.
+            #
+            queryString = "SELECT DISTINCT g.* from replays_game g, replays_playeringame pig, replays_player p "
+            queryString = queryString + "where (game_time - (INTERVAL '1 second' * duration_seconds/1.4)) - '%(starttime)s' between INTERVAL '-15 seconds' and INTERVAL '15 seconds'" % {"starttime": loc_starttime}
+            queryString = queryString + " AND g.id = pig.game_id "
+            queryString = queryString + " AND p.id = pig.player_id "
+            queryString = queryString + " AND p.bnet_id = %(bnet_id)i " % {"bnet_id": player.bnet_id}
+            queryString = queryString + " AND p.subregion = %(subregion)i " % {"subregion": player.subregion}
+            games = Game.objects.raw(queryString)
+            return games
+
+
       def upload(self, id):
             gameSummaryDB = GameSummary.objects.get(id__exact=id)
             s2gsio = self.get_file_from_s3("s2gs/%s.s2gs" % gameSummaryDB.s2gs_hash)
@@ -107,21 +126,7 @@ class S2GSPersister():
             loc_starttime = utc_starttime.astimezone(eastern)
             print "Game started at %(starttime)s, lasted %(realsecs)i real seconds and %(gamesecs)i game seconds" % {"starttime": loc_starttime, "realsecs": s2gs.real_length.seconds, "gamesecs": s2gs.game_length.seconds}
 
-            # Game.game_time is the end time of the replay.
-            #
-            # to consider it a match with a s2gs, we require that the replays end time be within 5 seconds
-            # of what you'd expect, which is the s2gs start time, plus the replay realtime duration,
-            # (which is gametime duration/1.4 for a Faster game)
-            #
-            queryString = "select g.* from replays_game g, replays_playeringame pig, replays_player p "
-            queryString = queryString + "where (game_time - (INTERVAL '1 second' * duration_seconds/1.4)) - '%(starttime)s' between INTERVAL '-15 seconds' and INTERVAL '15 seconds'" % {"starttime": loc_starttime}
-            queryString = queryString + " AND g.id = pig.game_id "
-            queryString = queryString + " AND p.id = pig.player_id "
-            queryString = queryString + " AND p.bnet_id = %(bnet_id)i " % {"bnet_id": players[0][0].bnet_id}
-            queryString = queryString + " AND p.subregion = %(subregion)i " % {"subregion": players[0][0].subregion}
-            games = Game.objects.raw(queryString)
-            print queryString
-            print "There are %(games)i games around the s2gs start time with the first player" % {"games": len(list(games))}
+            games = games_with_player_and_start(players[0][0], loc_starttime)
 
             thegame = None
             if len(list(games)) == 0:
