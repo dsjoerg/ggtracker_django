@@ -126,7 +126,7 @@ class S2GSPersister():
             loc_starttime = utc_starttime.astimezone(eastern)
             print "Game started at %(starttime)s, lasted %(realsecs)i real seconds and %(gamesecs)i game seconds" % {"starttime": loc_starttime, "realsecs": s2gs.real_length.seconds, "gamesecs": s2gs.game_length.seconds}
 
-            games = games_with_player_and_start(players[0][0], loc_starttime)
+            games = S2GSPersister.games_with_player_and_start(players[0][0], loc_starttime)
 
             thegame = None
             if len(list(games)) == 0:
