@@ -52,6 +52,7 @@ def dj_uploader(request):
         result = uploader(request)
     except Exception, e:
         print "Exception! ", e
+        traceback.print_exc()
     return result
 
 def start(request):

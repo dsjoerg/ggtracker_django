@@ -5,6 +5,7 @@ import os.path
 import sys
 import socket
 import djcelery
+import dj_database_url
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -16,17 +17,6 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.environ['POSTGRES_DBNAME'],                      # Or path to database file if using sqlite3.
-        'USER': os.environ['POSTGRES_USER'],                      # Not used with sqlite3.
-        'PASSWORD': os.environ['POSTGRES_PWORD'],   # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -175,6 +165,4 @@ sys.path.append(VENDOR_ROOT)
 if socket.gethostname() == "David-Joergs-MacBook-Pro.local":
     from settings_dev import *
 
-djcelery.setup_loader()
-BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
-CELERY_RESULT_DBURI = DATABASES['default']
+DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
