@@ -124,6 +124,7 @@ class DetailsReader(object):
         #   Unknown10
         #   Unknown11
         #
+
         data = buffer.read_data_struct()
 
         # To make things a little more meaningful in the rest of the code we
@@ -146,7 +147,11 @@ class DetailsReader(object):
 
         # As a final touch, label all extracted information using the Details
         # named tuple from objects.py
-        return Details(*ordered_values(data))
+
+        # chop off anything after the 14th element
+        details_args = ordered_values(data)[0:14]
+
+        return Details(*details_args)
 
 
 class MessageEventsReader(object):
@@ -335,3 +340,7 @@ class GameEventsReader_18574( GameEventsBase, Unknown2Parser, Unknown4Parser,
 class GameEventsReader_19595( GameEventsBase, Unknown2Parser, Unknown4Parser,
                               ActionParser_19595, SetupParser, CameraParser ):
     pass
+
+class NoopReader(object):
+    def __call__(self,buffer, replay):
+        return []

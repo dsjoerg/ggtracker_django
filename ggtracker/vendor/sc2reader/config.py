@@ -86,13 +86,22 @@ readers.add_range(18574, 19595, {
         'replay.game.events': r.GameEventsReader_18574(),
     })
 
-readers.add_range(19595, None, {
+readers.add_range(19595, 22419, {
         'replay.initData': r.InitDataReader(),
         'replay.details': r.DetailsReader(),
         'replay.attributes.events': r.AttributeEventsReader_17326(),
         'replay.message.events': r.MessageEventsReader(),
         'replay.game.events': r.GameEventsReader_19595(),
     })
+
+readers.add_range(22419, None, {
+        'replay.initData': r.InitDataReader(),
+        'replay.details': r.DetailsReader(),
+        'replay.attributes.events': r.AttributeEventsReader_17326(),
+        'replay.message.events': r.MessageEventsReader(),
+        'replay.game.events': r.NoopReader(),
+    })
+
 
 build_data = RangeMap()
 
