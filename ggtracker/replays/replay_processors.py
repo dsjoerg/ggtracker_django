@@ -156,31 +156,48 @@ def OwnershipTracker(replay):
     establish definite ownership of units."""
     # TODO: Work out shared ownership
     # TODO: Account for non-player owned (neutral) objects
-    # TODO: A race-based analysis would be more effecitve in many cases (TvZ)
+    # TODO: A race-based analysis would be more effective in many cases (TvZ)
     def mark_ownership(objects, player):
         for obj in objects:
             obj.owner = player
             player.units.add(obj)
 
+    def mark_ownership_if_first(objects, player):
+        for obj in objects:
+            if not hasattr(obj, "owner"):
+                obj.owner = player
+                player.units.add(obj)
+
     # Initialize all objects
     for unit in replay.objects.values():
         unit.owner = None
 
-    # Only loop over players since no one else can own anything
     for player in replay.players:
         player.units = set()
 
-        # A player can only select more than one unit at a time when selecting her own units
-        efilter = lambda e: isinstance(e, SelectionEvent) or isinstance(e, HotkeyEvent)
-        for event in filter(efilter, player.events):
-            selection = player.selection[event.frame][0x0A]
-            if len(selection.objects) > 1:
-                mark_ownership(selection.objects, player)
+    # TODO activate this logic for 1v1 games, where it works better
+    # than the alternative
+    if False:
+        # Only loop over players since no one else can own anything
+        for player in replay.players:
 
-        # A player can only issue orders to her own units
-        efilter = lambda e: isinstance(e, AbilityEvent)
-        for event in filter(efilter, player.events):
-            mark_ownership(player.selection[event.frame][0x0A].objects, player)
+            # A player can only select more than one unit at a time when selecting her own units
+            efilter = lambda e: isinstance(e, SelectionEvent) or isinstance(e, HotkeyEvent)
+            for event in filter(efilter, player.events):
+                selection = player.selection[event.frame][0x0A]
+                if len(selection.objects) > 1:
+                    mark_ownership(selection.objects, player)
+
+            # A player can only issue orders to her own units
+            efilter = lambda e: isinstance(e, AbilityEvent)
+            for event in filter(efilter, player.events):
+                mark_ownership(player.selection[event.frame][0x0A].objects, player)
+
+    efilter = lambda e: isinstance(e, SelectionEvent) or isinstance(e, HotkeyEvent)
+    for event in filter(efilter, replay.events):
+        selection = event.player.selection[event.frame][0x0A]
+        mark_ownership_if_first(selection.objects, event.player)
+
 
 @plugin
 def TrainingTracker(replay):
@@ -194,7 +211,7 @@ def TrainingTracker(replay):
             #if re.match("Archon", event.ability_name):
             #print event.ability_name
 
-            ability_name = re.sub('warpin|mergeinto|morphto','',event.ability_name.lower().replace(' ',''))
+            ability_name = re.sub('warpin|mergeinto|morphto|train|build','',event.ability_name.lower().replace(' ',''))
             if ability_name in army_values:
                 player.train_commands[ability_name].append(event.frame)
 
