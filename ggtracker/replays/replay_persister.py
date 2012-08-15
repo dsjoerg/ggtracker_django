@@ -1,7 +1,7 @@
 import Image
 import hashlib
 import boto
-import vendor.sc2reader
+import sc2reader
 import StringIO
 import pytz
 from s2gs_persister import *
@@ -14,8 +14,10 @@ from datetime import datetime
 from datetime import timedelta
 from pytz import timezone
 from django.conf import settings
-from vendor.sc2reader.processors.macro import Macro
 from boto.s3.key import Key
+
+import plugins
+plugins.setup()
 
 class ReplayPersister():
 
@@ -37,7 +39,7 @@ class ReplayPersister():
       def upload_from_ruby(self, id, sender_subdomain):
             replayDB = Replay.objects.get(id__exact=id)
             replaystringio = self.get_file_from_s3("%s.SC2Replay" % replayDB.md5hash)
-            replay = vendor.sc2reader.read_file(replaystringio, processors=[Macro], apply=True)
+            replay = sc2reader.load_replay(replaystringio)
 
             first_player = getOrCreatePlayer(replay.players[0])
             endtime = datetime.utcfromtimestamp(replay.unix_timestamp)

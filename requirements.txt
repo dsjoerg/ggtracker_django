@@ -17,3 +17,4 @@ python-dateutil==1.5
 wsgiref==0.1.2
 pytz
 dj-database-url==0.2.1
+-e git://github.com/ggtracker/sc2reader.git@v15#egg=sc2reader

@@ -159,9 +159,6 @@ AWS_SECRET_ACCESS_KEY = os.environ['S3_SECRET']
 MINIMAP_BUCKET_NAME = os.environ['S3_MINIMAP_BUCKET']
 REPLAYS_BUCKET_NAME = os.environ['S3_REPLAY_BUCKET']
 
-VENDOR_ROOT = os.path.join(PROJECT_PATH, "vendor")
-sys.path.append(VENDOR_ROOT)
-
 if socket.gethostname() == "David-Joergs-MacBook-Pro.local":
     from settings_dev import *
 
